@@ -1,0 +1,1 @@
+ALTER TABLE public.viral_creators ADD COLUMN IF NOT EXISTS projected_revenue numeric DEFAULT 0;

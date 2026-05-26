@@ -1,0 +1,38 @@
+project_id = "jcjycpvapetyihvkblpg"
+
+[functions.generate-creative]
+verify_jwt = false
+
+[functions.mine-data]
+verify_jwt = false
+
+[functions.ironpay-webhook]
+verify_jwt = false
+
+
+[functions.check-expiring-subscriptions]
+verify_jwt = false
+
+[functions.video-insight]
+verify_jwt = false
+
+[functions.generate-veo-prompt]
+verify_jwt = false
+
+[functions.send-notification-email]
+verify_jwt = false
+
+[functions.migrate-thumbnails]
+verify_jwt = false
+
+[functions.validate-coupon]
+verify_jwt = false
+
+[functions.admin-reset-password]
+verify_jwt = false
+
+[functions.download-video]
+verify_jwt = false
+
+[functions.check-fal-balance]
+verify_jwt = false

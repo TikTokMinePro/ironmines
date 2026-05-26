@@ -1,0 +1,1 @@
+ALTER TABLE public.viral_videos ADD COLUMN IF NOT EXISTS transcription text;

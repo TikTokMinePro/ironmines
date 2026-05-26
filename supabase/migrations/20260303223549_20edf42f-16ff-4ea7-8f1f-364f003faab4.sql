@@ -1,0 +1,1 @@
+ALTER TABLE public.viral_products DROP COLUMN IF EXISTS rank_change;

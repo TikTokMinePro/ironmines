@@ -1,0 +1,1 @@
+DROP POLICY "Authenticated can view active templates" ON public.email_templates;

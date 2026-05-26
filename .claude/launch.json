@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "ironmines",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["vite", "--port", "4567", "--host"],
+      "port": 4567
+    }
+  ]
+}

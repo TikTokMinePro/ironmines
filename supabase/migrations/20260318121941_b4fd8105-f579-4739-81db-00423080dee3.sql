@@ -1,0 +1,1 @@
+UPDATE mining_jobs SET status = 'error', error_message = 'Timeout: job ficou preso como running', finished_at = started_at + interval '60 seconds', duration_ms = 60000 WHERE status = 'running' AND started_at < now() - interval '1 hour';

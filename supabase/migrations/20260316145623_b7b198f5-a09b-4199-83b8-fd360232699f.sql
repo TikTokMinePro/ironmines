@@ -1,0 +1,1 @@
+UPDATE presets SET is_active = false WHERE type IN ('style', 'enhancement');

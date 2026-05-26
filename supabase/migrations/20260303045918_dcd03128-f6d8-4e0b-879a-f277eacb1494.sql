@@ -1,0 +1,1 @@
+ALTER TABLE public.viral_products ADD COLUMN IF NOT EXISTS variations jsonb DEFAULT '[]'::jsonb;

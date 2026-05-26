@@ -1,0 +1,1 @@
+UPDATE avatars SET image_url = 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400' WHERE id = '08c34e47-41b4-45d3-89de-d12a77ef3891';

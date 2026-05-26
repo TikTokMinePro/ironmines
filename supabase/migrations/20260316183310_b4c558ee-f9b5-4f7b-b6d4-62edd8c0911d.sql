@@ -1,0 +1,1 @@
+TRUNCATE TABLE public.generation_cache;

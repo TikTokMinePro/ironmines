@@ -1,0 +1,1 @@
+UPDATE avatars SET image_url = '/avatars/' || split_part(image_url, '/avatars/', 2) WHERE image_url LIKE '%/avatars/%';

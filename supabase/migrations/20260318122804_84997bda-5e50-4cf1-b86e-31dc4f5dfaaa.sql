@@ -1,0 +1,1 @@
+UPDATE mining_runs SET status = 'error', error_message = 'Timeout automático: run presa como running por mais de 5 min', finished_at = run_date + interval '5 minutes', duration_ms = 300000 WHERE status = 'running' AND run_date < now() - interval '5 minutes';

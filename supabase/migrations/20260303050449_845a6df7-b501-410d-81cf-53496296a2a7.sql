@@ -1,0 +1,1 @@
+UPDATE poses SET image_url = NULL WHERE id IN ('5581527c-b793-443a-a4be-99cade15984f', 'cc43b258-98e6-4dbe-b353-5d7549e13fae');
