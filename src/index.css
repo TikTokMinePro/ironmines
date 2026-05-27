@@ -1685,38 +1685,24 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   SECTION HEADERS — animated icon containers used in CardContent headers
+   SECTION HEADERS — icon containers used in CardContent headers
+   Hover: soft glow lift — no spinning elements
    ═══════════════════════════════════════════════════════════════ */
 
 .section-icon-box {
   position: relative;
   overflow: hidden;
+  transition:
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
 }
-.section-icon-box::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: conic-gradient(from var(--angle, 0deg),
-    transparent 0%,
-    hsl(var(--primary) / 0.4) 25%,
-    transparent 50%
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  border-radius: inherit;
-  animation: section-icon-spin 4s linear infinite;
-  pointer-events: none;
-}
-.section-icon-box:hover::after {
-  opacity: 1;
-}
-@keyframes section-icon-spin {
-  to { --angle: 360deg; }
-}
-@property --angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
+.section-icon-box:hover {
+  transform: scale(1.12) translateY(-1px);
+  box-shadow:
+    0 0 0 1px hsl(var(--primary) / 0.30),
+    0 4px 14px -4px hsl(var(--primary) / 0.35);
+  border-color: hsl(var(--primary) / 0.35) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════
