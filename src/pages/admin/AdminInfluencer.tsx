@@ -69,7 +69,15 @@ export default function AdminInfluencer() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-foreground">Influencer IA — Admin</h1>
+      <div className="page-hero flex items-center justify-between mb-6">
+        <div className="relative z-10">
+          <span className="chip-premium mb-2 inline-flex">IA</span>
+          <h1 className="type-hero">
+            <span className="text-foreground/90">Influencer IA — </span>
+            <span className="page-title-gradient">Admin</span>
+          </h1>
+        </div>
+      </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -112,8 +120,8 @@ function StatCard({ icon: Icon, label, value }: { icon: any; label: string; valu
           <Icon className="w-5 h-5 text-primary-foreground" />
         </div>
         <div>
-          <p className="text-2xl font-bold text-foreground">{value}</p>
-          <p className="text-xs text-muted-foreground">{label}</p>
+          <p className="type-stat-lg text-foreground">{value}</p>
+          <p className="type-overline text-muted-foreground mt-0.5">{label}</p>
         </div>
       </CardContent>
     </Card>

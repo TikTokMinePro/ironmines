@@ -43,13 +43,21 @@ export default function AdminDiagnostics() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-foreground">Diagnóstico de Auditorias</h1>
+      <div className="page-hero flex items-center justify-between mb-6">
+        <div className="relative z-10">
+          <span className="chip-premium mb-2 inline-flex">IA</span>
+          <h1 className="type-hero">
+            <span className="text-foreground/90">Diagnóstico de </span>
+            <span className="page-title-gradient">Auditorias</span>
+          </h1>
+        </div>
+      </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="glass"><CardContent className="p-4"><p className="text-2xl font-bold text-primary">{generations?.length || 0}</p><p className="text-xs text-muted-foreground">Total gerações</p></CardContent></Card>
-        <Card className="glass"><CardContent className="p-4"><p className="text-2xl font-bold text-secondary">{withDiag.length}</p><p className="text-xs text-muted-foreground">Com diagnóstico</p></CardContent></Card>
-        <Card className="glass"><CardContent className="p-4"><p className="text-2xl font-bold text-primary">{passRate}%</p><p className="text-xs text-muted-foreground">Taxa de aprovação</p></CardContent></Card>
-        <Card className="glass"><CardContent className="p-4"><p className="text-2xl font-bold text-secondary">{(avgLatency / 1000).toFixed(1)}s</p><p className="text-xs text-muted-foreground">Latência média</p></CardContent></Card>
+        <Card className="glass"><CardContent className="p-4"><p className="type-stat-lg text-primary">{generations?.length || 0}</p><p className="type-overline text-muted-foreground mt-0.5">Total gerações</p></CardContent></Card>
+        <Card className="glass"><CardContent className="p-4"><p className="type-stat-lg text-secondary">{withDiag.length}</p><p className="type-overline text-muted-foreground mt-0.5">Com diagnóstico</p></CardContent></Card>
+        <Card className="glass"><CardContent className="p-4"><p className="type-stat-lg text-primary">{passRate}%</p><p className="type-overline text-muted-foreground mt-0.5">Taxa de aprovação</p></CardContent></Card>
+        <Card className="glass"><CardContent className="p-4"><p className="type-stat-lg text-secondary">{(avgLatency / 1000).toFixed(1)}s</p><p className="type-overline text-muted-foreground mt-0.5">Latência média</p></CardContent></Card>
       </div>
 
       <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">

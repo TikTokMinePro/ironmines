@@ -95,7 +95,15 @@ export default function AdminData() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Database className="w-6 h-6 text-primary" />
-          <h1 className="text-2xl font-bold text-foreground">Dados & Mineração</h1>
+      <div className="page-hero flex items-center justify-between mb-6">
+        <div className="relative z-10">
+          <span className="chip-premium mb-2 inline-flex">Mineração</span>
+          <h1 className="type-hero">
+            <span className="text-foreground/90">Dados & </span>
+            <span className="page-title-gradient">Mineração</span>
+          </h1>
+        </div>
+      </div>
         </div>
         <Button className="gradient-primary text-primary-foreground" onClick={() => forceMine.mutate()} disabled={forceMine.isPending}>
           {forceMine.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Play className="w-4 h-4 mr-2" />}

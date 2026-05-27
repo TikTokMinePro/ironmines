@@ -129,7 +129,15 @@ export default function AdminPaymentGateway() {
     <div className="space-y-6">
       <div className="flex items-center gap-3">
         <CreditCard className="w-6 h-6 text-primary" />
-        <h1 className="text-2xl font-bold text-foreground">Gateway de Pagamento</h1>
+      <div className="page-hero flex items-center justify-between mb-6">
+        <div className="relative z-10">
+          <span className="chip-premium mb-2 inline-flex">Financeiro</span>
+          <h1 className="type-hero">
+            <span className="text-foreground/90">Gateway de </span>
+            <span className="page-title-gradient">Pagamento</span>
+          </h1>
+        </div>
+      </div>
       </div>
 
       {/* Gateway Config */}
@@ -148,7 +156,7 @@ export default function AdminPaymentGateway() {
           <div className="space-y-2">
             <Label>Bearer Token</Label>
             <Input type="password" placeholder="Gerenciado via Banco de Dados (IRONPAY_TOKEN)" disabled className="bg-muted" />
-            <p className="text-xs text-muted-foreground">Configure em Banco de Dados → Edge Functions → Secrets</p>
+            <p className="type-overline text-muted-foreground mt-0.5">Configure em Banco de Dados → Edge Functions → Secrets</p>
           </div>
 
           <div className="space-y-2">
@@ -252,7 +260,7 @@ export default function AdminPaymentGateway() {
                       <div className="flex items-center justify-between">
                         <h3 className="font-semibold text-foreground">{key}</h3>
                         <div className="flex items-center gap-2">
-                          <Label className="text-xs text-muted-foreground">Popular</Label>
+                          <Label className="type-overline text-muted-foreground mt-0.5">Popular</Label>
                           <Switch
                             checked={plan.popular}
                             onCheckedChange={(v) => updatePlan(key, "popular", v)}
@@ -300,7 +308,7 @@ export default function AdminPaymentGateway() {
                   </Card>
                 );
               })}
-              <p className="text-xs text-muted-foreground">
+              <p className="type-overline text-muted-foreground mt-0.5">
                 <AlertTriangle className="w-3.5 h-3.5 inline mr-1" /> As alterações serão aplicadas imediatamente na página de planos visível para os usuários.
               </p>
             </div>
@@ -313,7 +321,7 @@ export default function AdminPaymentGateway() {
                   <Card key={key} className={`border border-border/50 ${plan.popular ? "border-primary" : ""}`}>
                     <CardContent className="p-4 text-center">
                       <h3 className="font-semibold text-foreground">{plan.name}</h3>
-                      <p className="text-2xl font-bold text-primary mt-2">{fmtBRL(plan.price_cents)}</p>
+                      <p className="type-stat-lg text-primary mt-2">{fmtBRL(plan.price_cents)}</p>
                       <p className="text-xs text-muted-foreground mt-1">{plan.duration_months} {plan.duration_months === 1 ? "mês" : "meses"}</p>
                       {plan.discount_label && <Badge variant="secondary" className="mt-2 text-xs">{plan.discount_label} desconto</Badge>}
                       {plan.popular && <Badge className="mt-2 text-xs gradient-primary text-primary-foreground ml-1">Popular</Badge>}
@@ -338,10 +346,10 @@ export default function AdminPaymentGateway() {
           </div>
           <div className="space-y-2">
             <div>
-              <Label className="text-xs text-muted-foreground">URL do Webhook</Label>
+              <Label className="type-overline text-muted-foreground mt-0.5">URL do Webhook</Label>
               <Input value={`https://jcjycpvapetyihvkblpg.supabase.co/functions/v1/ironpay-webhook`} readOnly className="font-mono text-xs bg-muted" />
             </div>
-            <p className="text-xs text-muted-foreground">Configure esta URL no painel IronPay para receber notificações de pagamento.</p>
+            <p className="type-overline text-muted-foreground mt-0.5">Configure esta URL no painel IronPay para receber notificações de pagamento.</p>
           </div>
         </CardContent>
       </Card>

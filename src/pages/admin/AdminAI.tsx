@@ -21,11 +21,19 @@ export default function AdminAI() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-foreground">IA & Criativos</h1>
+      <div className="page-hero flex items-center justify-between mb-6">
+        <div className="relative z-10">
+          <span className="chip-premium mb-2 inline-flex">IA</span>
+          <h1 className="type-hero">
+            <span className="text-foreground/90">IA & </span>
+            <span className="page-title-gradient">Criativos</span>
+          </h1>
+        </div>
+      </div>
 
       <div className="grid grid-cols-2 gap-4">
-        <Card className="glass"><CardContent className="p-4"><p className="text-2xl font-bold text-primary">{totalThisMonth}</p><p className="text-xs text-muted-foreground">Criativos este mês</p></CardContent></Card>
-        <Card className="glass"><CardContent className="p-4"><p className="text-2xl font-bold text-secondary">{creatives?.length || 0}</p><p className="text-xs text-muted-foreground">Total de criativos</p></CardContent></Card>
+        <Card className="glass"><CardContent className="p-4"><p className="type-stat-lg text-primary">{totalThisMonth}</p><p className="type-overline text-muted-foreground mt-0.5">Criativos este mês</p></CardContent></Card>
+        <Card className="glass"><CardContent className="p-4"><p className="type-stat-lg text-secondary">{creatives?.length || 0}</p><p className="type-overline text-muted-foreground mt-0.5">Total de criativos</p></CardContent></Card>
       </div>
 
       <Card className="glass">

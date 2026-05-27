@@ -90,7 +90,15 @@ export default function AdminEmailTemplates() {
     <div className="space-y-6">
       <div className="flex items-center gap-3">
         <Mail className="w-6 h-6 text-primary" />
-        <h1 className="text-2xl font-bold text-foreground">Modelos de Mensagens</h1>
+      <div className="page-hero flex items-center justify-between mb-6">
+        <div className="relative z-10">
+          <span className="chip-premium mb-2 inline-flex">Comunicação</span>
+          <h1 className="type-hero">
+            <span className="text-foreground/90">Modelos de </span>
+            <span className="page-title-gradient">Mensagens</span>
+          </h1>
+        </div>
+      </div>
       </div>
 
       <div className="flex items-center justify-between">
@@ -120,7 +128,7 @@ export default function AdminEmailTemplates() {
                     {!t.is_active && <Badge variant="destructive" className="text-[10px]">Desativado</Badge>}
                   </div>
                   <p className="text-sm text-muted-foreground mb-1">Assunto: {t.subject}</p>
-                  {t.description && <p className="text-xs text-muted-foreground">{t.description}</p>}
+                  {t.description && <p className="type-overline text-muted-foreground mt-0.5">{t.description}</p>}
                   <div className="flex flex-wrap gap-1 mt-2">
                     {VARIABLES_HELP[t.slug]?.map(v => (
                       <Badge key={v} variant="secondary" className="text-[10px] font-mono">{v}</Badge>
@@ -182,7 +190,7 @@ export default function AdminEmailTemplates() {
                 onChange={e => setSenderEmail(e.target.value)}
                 placeholder="Nome <email@seudominio.com>"
               />
-              <p className="text-xs text-muted-foreground">Formato: Nome {"<email@dominio.com>"} — Ex: IronMines {"<no-reply@ironmines.com>"}</p>
+              <p className="type-overline text-muted-foreground mt-0.5">Formato: Nome {"<email@dominio.com>"} — Ex: IronMines {"<no-reply@ironmines.com>"}</p>
             </div>
             <div className="flex gap-2">
               <Button

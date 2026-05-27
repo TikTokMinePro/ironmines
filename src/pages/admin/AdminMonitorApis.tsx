@@ -206,7 +206,15 @@ export default function AdminMonitorApis() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Activity className="w-6 h-6 text-primary" />
-          <h1 className="text-2xl font-bold text-foreground">Monitor APIs</h1>
+      <div className="page-hero flex items-center justify-between mb-6">
+        <div className="relative z-10">
+          <span className="chip-premium mb-2 inline-flex">Mineração</span>
+          <h1 className="type-hero">
+            <span className="text-foreground/90">Monitor </span>
+            <span className="page-title-gradient">APIs</span>
+          </h1>
+        </div>
+      </div>
         </div>
       </div>
 
@@ -230,16 +238,16 @@ export default function AdminMonitorApis() {
                       </div>
                       <StIcon className={`w-4 h-4 ${st.color} ${job?.status === "running" ? "animate-pulse" : ""}`} />
                     </div>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="type-overline text-muted-foreground mt-0.5">
                       {job?.started_at
                         ? new Date(job.started_at).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })
                         : "Nunca executado"}
                     </p>
                     <div className="flex items-center gap-2 mt-1">
                       <Badge variant="outline" className={`text-xs ${st.color}`}>{st.label}</Badge>
-                      <span className="text-xs text-muted-foreground">{job?.records_fetched || 0} itens</span>
+                      <span className="type-overline text-muted-foreground mt-0.5">{job?.records_fetched || 0} itens</span>
                       {job?.duration_ms != null && (
-                        <span className="text-xs text-muted-foreground">{(job.duration_ms / 1000).toFixed(1)}s</span>
+                        <span className="type-overline text-muted-foreground mt-0.5">{(job.duration_ms / 1000).toFixed(1)}s</span>
                       )}
                     </div>
                   </>
@@ -256,7 +264,7 @@ export default function AdminMonitorApis() {
               <Clock className="w-4 h-4 text-muted-foreground" />
               <span className="text-sm font-medium text-foreground">Próxima Execução</span>
             </div>
-            <p className="text-2xl font-mono font-bold text-primary tracking-wider">{countdown}</p>
+            <p className="type-stat-lg text-primary">{countdown}</p>
             <p className="text-xs text-muted-foreground mt-1">Próximo cron: 00:00 UTC</p>
           </CardContent>
         </Card>
@@ -275,7 +283,7 @@ export default function AdminMonitorApis() {
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-foreground">Créditos FAL.AI</h3>
-                <p className="text-xs text-muted-foreground">Saldo para geração de imagens Influencer IA</p>
+                <p className="type-overline text-muted-foreground mt-0.5">Saldo para geração de imagens Influencer IA</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -288,7 +296,7 @@ export default function AdminMonitorApis() {
               ) : (
                 <>
                   <div className="text-right">
-                    <p className={`text-2xl font-bold font-mono ${
+                    <p className={`type-stat-lg font-mono ${
                       falBalance?.is_locked ? 'text-destructive' :
                       (falBalance?.balance != null && falBalance.balance < 1) ? 'text-warning' :
                       'text-success'
@@ -410,11 +418,11 @@ export default function AdminMonitorApis() {
                     <TableRow key={j.id} className="hover:bg-muted/30">
                       <TableCell className="text-muted-foreground text-xs">{page * PAGE_SIZE + idx + 1}</TableCell>
                       <TableCell className="font-medium text-foreground">{getJobLabel(j)}</TableCell>
-                      <TableCell className="text-xs text-muted-foreground">{j.triggered_by || "—"}</TableCell>
-                      <TableCell className="text-xs text-muted-foreground">
+                      <TableCell className="type-overline text-muted-foreground mt-0.5">{j.triggered_by || "—"}</TableCell>
+                      <TableCell className="type-overline text-muted-foreground mt-0.5">
                         {j.started_at ? new Date(j.started_at).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "—"}
                       </TableCell>
-                      <TableCell className="text-xs text-muted-foreground">
+                      <TableCell className="type-overline text-muted-foreground mt-0.5">
                         {j.finished_at ? new Date(j.finished_at).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "—"}
                       </TableCell>
                       <TableCell className="text-xs text-muted-foreground font-mono">
@@ -463,7 +471,7 @@ export default function AdminMonitorApis() {
           <Download className="w-4 h-4 mr-2" /> CSV
         </Button>
         <div className="flex items-center gap-2 ml-auto">
-          <span className="text-xs text-muted-foreground">Auto-refresh 30s</span>
+          <span className="type-overline text-muted-foreground mt-0.5">Auto-refresh 30s</span>
           <Switch checked={autoRefresh} onCheckedChange={setAutoRefresh} />
         </div>
       </div>

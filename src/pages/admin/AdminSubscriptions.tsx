@@ -85,15 +85,23 @@ export default function AdminSubscriptions() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-foreground">Assinaturas</h1>
+      <div className="page-hero flex items-center justify-between mb-6">
+        <div className="relative z-10">
+          <span className="chip-premium mb-2 inline-flex">Gestão</span>
+          <h1 className="type-hero">
+            <span className="text-foreground/90"> </span>
+            <span className="page-title-gradient">Assinaturas</span>
+          </h1>
+        </div>
+      </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {kpis.map(k => (
           <Card key={k.label} className="glass">
             <CardContent className="p-4">
               <k.icon className={`w-5 h-5 ${k.color} mb-2`} />
-              <p className={`text-2xl font-bold ${k.color}`}>{k.value}</p>
-              <p className="text-xs text-muted-foreground">{k.label}</p>
+              <p className={`type-stat-lg ${k.color}`}>{k.value}</p>
+              <p className="type-overline text-muted-foreground mt-0.5">{k.label}</p>
             </CardContent>
           </Card>
         ))}
