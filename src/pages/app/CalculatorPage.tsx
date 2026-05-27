@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip } from "recharts";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Calculator } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function CalculatorPage() {
@@ -24,7 +24,21 @@ export default function CalculatorPage() {
 
   return (
     <PageTransition className="space-y-6 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold text-foreground">Calculadora de Ganhos</h1>
+      <div className="page-hero">
+        <div className="relative z-10 flex items-center gap-3">
+          <div className="section-icon-box w-11 h-11 rounded-xl bg-gradient-to-br from-primary/25 via-primary/15 to-primary/5 flex items-center justify-center border border-primary/25 shadow-[0_2px_12px_rgba(0,224,0,0.25),0_0_22px_rgba(0,224,0,0.12),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-sm">
+            <Calculator className="w-5 h-5 text-primary drop-shadow-[0_0_8px_rgba(0,224,0,0.6)] relative z-10" />
+          </div>
+          <div>
+            <span className="chip-premium mb-1.5 inline-flex">Simulador</span>
+            <h1 className="text-2xl font-display font-bold tracking-tight">
+              <span className="text-foreground/90">Calculadora de </span>
+              <span className="page-title-gradient">Ganhos</span>
+            </h1>
+            <p className="text-sm text-muted-foreground/85 mt-0.5">Projeção realista do seu potencial mensal</p>
+          </div>
+        </div>
+      </div>
 
       <Card className="glass">
         <CardContent className="p-6 space-y-4">

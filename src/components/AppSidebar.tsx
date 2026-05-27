@@ -154,9 +154,9 @@ const SidebarLink = React.forwardRef<HTMLAnchorElement, {
 );
 SidebarLink.displayName = "SidebarLink";
 
-function MenuGroup({ items, onNavigate, startIndex = 0, tintClass }: { items: MenuItem[]; onNavigate?: () => void; startIndex?: number; tintClass?: string }) {
+function MenuGroup({ items, onNavigate, startIndex = 0 }: { items: MenuItem[]; onNavigate?: () => void; startIndex?: number }) {
   return (
-    <SidebarMenu className={tintClass}>
+    <SidebarMenu>
       {items.map((item, i) => {
         const isDashboard = item.url === "/app/dashboard";
         return (
@@ -232,17 +232,13 @@ export function AppSidebar() {
           <SidebarGroupContent>
             {/* Análise group */}
             <GroupLabel>Análise Viral</GroupLabel>
-            <div className="sidebar-group-analise">
-              <MenuGroup items={groupAnalise} onNavigate={closeMobile} startIndex={1} tintClass="sidebar-group-analise" />
-            </div>
+            <MenuGroup items={groupAnalise} onNavigate={closeMobile} startIndex={1} />
 
             <SidebarDivider />
 
             {/* IA group */}
             <GroupLabel>Ferramentas IA</GroupLabel>
-            <div className="sidebar-group-ia">
-              <MenuGroup items={groupIA} onNavigate={closeMobile} startIndex={6} tintClass="sidebar-group-ia" />
-            </div>
+            <MenuGroup items={groupIA} onNavigate={closeMobile} startIndex={6} />
           </SidebarGroupContent>
         </SidebarGroup>
 

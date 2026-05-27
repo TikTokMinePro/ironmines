@@ -161,18 +161,23 @@ export default function Dashboard() {
       </AnimatePresence>
       <PageTransition className="space-y-5 relative" delay={0.1}>
           <DashboardParticles />
-          {/* Header */}
+          {/* Premium Hero Header */}
           <PageSection>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-              <div>
-                <h1 className="text-lg sm:text-xl font-display font-bold text-foreground tracking-tight">
-                  Olá, <span className="text-primary">{firstName}</span> <Hand className="w-5 h-5 inline-block text-primary/70" />
+            <div className="page-hero flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div className="relative z-10">
+                <span className="chip-premium mb-2 inline-flex">
+                  Painel
+                </span>
+                <h1 className="text-xl sm:text-2xl font-display font-bold tracking-tight">
+                  <span className="text-foreground/90">Olá, </span>
+                  <span className="page-title-gradient">{firstName}</span>
+                  <Hand className="w-5 h-5 inline-block text-primary/80 ml-2 animate-float-medium" />
                 </h1>
-                <p className="text-xs text-muted-foreground mt-0.5">Resumo da sua mineração</p>
+                <p className="text-xs text-muted-foreground/80 mt-1">Resumo da sua mineração em tempo real</p>
               </div>
-              <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground/60 bg-muted/30 rounded-md px-2.5 py-1">
-                <Clock className="w-3 h-3" />
-                Atualizado agora
+              <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground bg-primary/5 border border-primary/15 rounded-md px-2.5 py-1.5 backdrop-blur-sm relative z-10">
+                <Clock className="w-3 h-3 text-primary animate-spin" style={{ animationDuration: '6s' }} />
+                <span className="font-semibold tracking-wide">Atualizado agora</span>
               </div>
             </div>
           </PageSection>
@@ -183,10 +188,10 @@ export default function Dashboard() {
                 <StaggerItem key={kpi.label}>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Card className="hover:border-primary/20 transition-all duration-300 group cursor-help">
-                      <CardContent className="p-4">
-                        <div className={`w-8 h-8 rounded-lg ${kpi.bg} flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform`}>
-                          <kpi.icon className={`w-4 h-4 ${kpi.color}`} />
+                    <Card className="metric-tile hover:border-primary/20 transition-all duration-300 group cursor-help">
+                      <CardContent className="p-4 relative z-10">
+                        <div className={`metric-icon-glow section-icon-box w-9 h-9 rounded-lg ${kpi.bg} flex items-center justify-center mb-2.5 group-hover:scale-110 transition-transform border border-white/[0.06]`}>
+                          <kpi.icon className={`w-4 h-4 ${kpi.color} relative z-10`} />
                         </div>
                         {loadingStats ? (
                           <Skeleton className="h-7 w-16 mb-1" />
@@ -214,13 +219,15 @@ export default function Dashboard() {
                 <StaggerItem key={kpi.label}>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Card className="hover:border-primary/20 transition-all duration-300 cursor-help">
-                      <CardContent className="p-3.5">
+                    <Card className="metric-tile hover:border-primary/20 transition-all duration-300 cursor-help">
+                      <CardContent className="p-3.5 relative z-10">
                         <div className="flex items-center gap-2 mb-1.5">
-                          <kpi.icon className={`w-3.5 h-3.5 ${kpi.color}`} />
+                          <span className="w-5 h-5 rounded-md bg-white/[0.04] border border-white/[0.06] flex items-center justify-center">
+                            <kpi.icon className={`w-3 h-3 ${kpi.color}`} />
+                          </span>
                           <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-medium">{kpi.label}</p>
                         </div>
-                        <p className={`text-lg font-bold ${kpi.color} tabular-nums`}>{kpi.value}</p>
+                        <p className={`text-lg font-bold ${kpi.color} tabular-nums drop-shadow-[0_0_8px_hsl(var(--primary)/0.2)]`}>{kpi.value}</p>
                       </CardContent>
                     </Card>
                   </TooltipTrigger>
@@ -236,13 +243,15 @@ export default function Dashboard() {
           <PageSection>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-sm">
               <Link to="/app/influencer">
-                <Button className="w-full gap-1.5" size="sm">
-                  <Sparkles className="w-3.5 h-3.5" /> Criar Influencer IA
+                <Button className="btn-premium w-full gap-1.5 relative overflow-hidden" size="sm">
+                  <Sparkles className="w-3.5 h-3.5 relative z-10" />
+                  <span className="relative z-10">Criar Influencer IA</span>
                 </Button>
               </Link>
               <Link to="/app/criativos">
-                <Button variant="outline" className="w-full gap-1.5 border-white/70 hover:border-white" size="sm">
-                  <Sparkles className="w-3.5 h-3.5" /> Meus Criativos
+                <Button variant="outline" className="btn-premium w-full gap-1.5 border-white/30 hover:border-primary/60 hover:bg-primary/5" size="sm">
+                  <Sparkles className="w-3.5 h-3.5 relative z-10" />
+                  <span className="relative z-10">Meus Criativos</span>
                 </Button>
               </Link>
             </div>
@@ -254,18 +263,18 @@ export default function Dashboard() {
           <Card className="lg:col-span-2">
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-primary/8 flex items-center justify-center">
-                    <TrendingUp className="w-3.5 h-3.5 text-primary" />
+                <div className="flex items-center gap-2.5">
+                  <div className="section-icon-box w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shadow-[0_0_12px_-2px_hsl(var(--primary)/0.3)]">
+                    <TrendingUp className="w-4 h-4 text-primary relative z-10" />
                   </div>
                   <div>
-                    <h2 className="text-sm font-semibold text-foreground">Top 5 Produtos do Dia</h2>
-                    <p className="text-[10px] text-muted-foreground">Maior faturamento 30d</p>
+                    <h2 className="text-sm font-semibold text-foreground tracking-tight">Top 5 Produtos do Dia</h2>
+                    <p className="text-[10px] text-muted-foreground/80">Maior faturamento 30d</p>
                   </div>
                 </div>
                 <Link to="/app/produtos">
-                  <Button variant="ghost" size="sm" className="text-[11px] text-muted-foreground hover:text-primary gap-1 h-7">
-                    Ver todos <ArrowRight className="w-3 h-3" />
+                  <Button variant="ghost" size="sm" className="text-[11px] text-muted-foreground hover:text-primary gap-1 h-7 group/btn">
+                    Ver todos <ArrowRight className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5" />
                   </Button>
                 </Link>
               </div>
@@ -289,7 +298,7 @@ export default function Dashboard() {
                     <Link
                       key={p.id}
                       to={`/app/produtos/${p.id}`}
-                      className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-muted/30 transition-all duration-150 group/item"
+                      className="data-row-premium flex items-center gap-3 p-2.5 rounded-lg hover:bg-primary/[0.04] transition-all duration-300 group/item relative"
                     >
                       <div className="w-7 text-center shrink-0">
                         <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full ${i < 3 ? "bg-primary text-primary-foreground" : "text-muted-foreground/60"}`}>
@@ -340,13 +349,13 @@ export default function Dashboard() {
           {/* Category Revenue Chart */}
           <Card>
             <CardContent className="p-4">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-7 h-7 rounded-lg bg-secondary/8 flex items-center justify-center">
-                  <BarChart3 className="w-3.5 h-3.5 text-secondary" />
+              <div className="flex items-center gap-2.5 mb-4">
+                <div className="section-icon-box w-8 h-8 rounded-lg bg-secondary/10 border border-secondary/20 flex items-center justify-center shadow-[0_0_12px_-2px_hsl(var(--secondary)/0.3)]">
+                  <BarChart3 className="w-4 h-4 text-secondary relative z-10" />
                 </div>
                 <div>
-                  <h2 className="text-sm font-semibold text-foreground">Por Loja</h2>
-                  <p className="text-[10px] text-muted-foreground">Faturamento 30d</p>
+                  <h2 className="text-sm font-semibold text-foreground tracking-tight">Por Loja</h2>
+                  <p className="text-[10px] text-muted-foreground/80">Faturamento 30d</p>
                 </div>
               </div>
               {shopChart.length > 0 ? (
@@ -374,24 +383,24 @@ export default function Dashboard() {
             <Card>
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-warning/8 flex items-center justify-center">
-                    <Users className="w-3.5 h-3.5 text-warning" />
+                <div className="flex items-center gap-2.5">
+                  <div className="section-icon-box w-8 h-8 rounded-lg bg-warning/10 border border-warning/20 flex items-center justify-center shadow-[0_0_12px_-2px_hsl(var(--warning)/0.3)]">
+                    <Users className="w-4 h-4 text-warning relative z-10" />
                   </div>
                   <div>
-                    <h2 className="text-sm font-semibold text-foreground">Top Criadores</h2>
-                    <p className="text-[10px] text-muted-foreground">Maior receita projetada</p>
+                    <h2 className="text-sm font-semibold text-foreground tracking-tight">Top Criadores</h2>
+                    <p className="text-[10px] text-muted-foreground/80">Maior receita projetada</p>
                   </div>
                 </div>
                 <Link to="/app/criadores">
-                  <Button variant="ghost" size="sm" className="text-[11px] text-muted-foreground hover:text-primary gap-1 h-7">
-                    Ver todos <ArrowRight className="w-3 h-3" />
+                  <Button variant="ghost" size="sm" className="text-[11px] text-muted-foreground hover:text-primary gap-1 h-7 group/btn">
+                    Ver todos <ArrowRight className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5" />
                   </Button>
                 </Link>
               </div>
               <div className="space-y-1">
                 {topCreators?.map((c: any, i: number) => (
-                  <div key={c.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/30 transition-all">
+                  <div key={c.id} className="data-row-premium flex items-center gap-3 p-2 rounded-lg hover:bg-primary/[0.04] transition-all duration-300 relative">
                     <span className={`text-xs font-bold w-5 text-center ${i < 3 ? "text-primary" : "text-muted-foreground/50"}`}>
                       {i + 1}
                     </span>
@@ -428,24 +437,24 @@ export default function Dashboard() {
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-destructive/8 flex items-center justify-center">
-                    <Play className="w-3.5 h-3.5 text-destructive" />
+                <div className="flex items-center gap-2.5">
+                  <div className="section-icon-box w-8 h-8 rounded-lg bg-destructive/10 border border-destructive/20 flex items-center justify-center shadow-[0_0_12px_-2px_hsl(var(--destructive)/0.3)]">
+                    <Play className="w-4 h-4 text-destructive relative z-10" />
                   </div>
                   <div>
-                    <h2 className="text-sm font-semibold text-foreground">Vídeos em Alta</h2>
-                    <p className="text-[10px] text-muted-foreground">Mais visualizações</p>
+                    <h2 className="text-sm font-semibold text-foreground tracking-tight">Vídeos em Alta</h2>
+                    <p className="text-[10px] text-muted-foreground/80">Mais visualizações</p>
                   </div>
                 </div>
                 <Link to="/app/videos">
-                  <Button variant="ghost" size="sm" className="text-[11px] text-muted-foreground hover:text-primary gap-1 h-7">
-                    Ver todos <ArrowRight className="w-3 h-3" />
+                  <Button variant="ghost" size="sm" className="text-[11px] text-muted-foreground hover:text-primary gap-1 h-7 group/btn">
+                    Ver todos <ArrowRight className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5" />
                   </Button>
                 </Link>
               </div>
               <div className="space-y-1">
                 {trendingVideos?.map((v: any, i: number) => (
-                  <div key={v.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/30 transition-all">
+                  <div key={v.id} className="data-row-premium flex items-center gap-3 p-2 rounded-lg hover:bg-primary/[0.04] transition-all duration-300 relative">
                     <div className="w-10 h-14 rounded-md bg-muted/50 overflow-hidden shrink-0 ring-1 ring-border/20 relative">
                       <VideoThumbnail
                         thumbnailUrl={v.thumbnail_url}

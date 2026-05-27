@@ -125,18 +125,24 @@ export default function VideosPage() {
 
   return (
     <PageTransition className="space-y-5">
-      {/* Header */}
+      {/* Premium Hero Header */}
       <PageSection>
-        <div>
-          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/25 via-primary/15 to-primary/5 flex items-center justify-center border border-primary/20 shadow-[0_2px_12px_rgba(0,224,0,0.2),0_0_20px_rgba(0,224,0,0.1),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-sm">
-              <Video className="w-5 h-5 text-primary drop-shadow-[0_0_6px_rgba(0,224,0,0.5)]" />
+        <div className="page-hero">
+          <div className="relative z-10 flex items-center gap-3">
+            <div className="section-icon-box w-11 h-11 rounded-xl bg-gradient-to-br from-primary/25 via-primary/15 to-primary/5 flex items-center justify-center border border-primary/25 shadow-[0_2px_12px_rgba(0,224,0,0.25),0_0_22px_rgba(0,224,0,0.12),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-sm">
+              <Video className="w-5 h-5 text-primary drop-shadow-[0_0_8px_rgba(0,224,0,0.6)] relative z-10" />
             </div>
-            Vídeos <span className="text-primary">Virais</span>
-          </h1>
-          <p className="text-sm text-muted-foreground mt-1 ml-[46px]">
-            Top 40 vídeos mais virais do TikTok Shop Brasil (últimos 14 dias)
-          </p>
+            <div>
+              <span className="chip-premium mb-1.5 inline-flex">Top BR · 14 dias</span>
+              <h1 className="text-2xl font-display font-bold tracking-tight">
+                <span className="text-foreground/90">Vídeos </span>
+                <span className="page-title-gradient">Virais</span>
+              </h1>
+              <p className="text-sm text-muted-foreground/85 mt-0.5">
+                Top 40 vídeos mais virais do TikTok Shop Brasil
+              </p>
+            </div>
+          </div>
         </div>
       </PageSection>
 

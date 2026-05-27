@@ -44,7 +44,21 @@ export default function CreativesPage() {
 
   return (
     <PageTransition className="space-y-6">
-      <h1 className="text-2xl font-bold text-foreground">Meus Criativos</h1>
+      <div className="page-hero">
+        <div className="relative z-10 flex items-center gap-3">
+          <div className="section-icon-box w-11 h-11 rounded-xl bg-gradient-to-br from-primary/25 via-primary/15 to-primary/5 flex items-center justify-center border border-primary/25 shadow-[0_2px_12px_rgba(0,224,0,0.25),0_0_22px_rgba(0,224,0,0.12),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-sm">
+            <Sparkles className="w-5 h-5 text-primary drop-shadow-[0_0_8px_rgba(0,224,0,0.6)] relative z-10" />
+          </div>
+          <div>
+            <span className="chip-premium mb-1.5 inline-flex">Biblioteca IA</span>
+            <h1 className="text-2xl font-display font-bold tracking-tight">
+              <span className="text-foreground/90">Meus </span>
+              <span className="page-title-gradient">Criativos</span>
+            </h1>
+            <p className="text-sm text-muted-foreground/85 mt-0.5">Imagens, vídeos e UGC gerados pela Influencer IA</p>
+          </div>
+        </div>
+      </div>
 
       {isLoading ? (
         <CreativesSkeleton />
