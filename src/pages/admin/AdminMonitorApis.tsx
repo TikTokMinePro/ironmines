@@ -202,10 +202,6 @@ export default function AdminMonitorApis() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Activity className="w-6 h-6 text-primary" />
       <div className="page-hero flex items-center justify-between mb-6">
         <div className="relative z-10">
           <span className="chip-premium mb-2 inline-flex">Mineração</span>
@@ -213,8 +209,6 @@ export default function AdminMonitorApis() {
             <span className="text-foreground/90">Monitor </span>
             <span className="page-title-gradient">APIs</span>
           </h1>
-        </div>
-      </div>
         </div>
       </div>
 

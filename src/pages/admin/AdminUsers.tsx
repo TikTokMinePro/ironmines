@@ -52,20 +52,15 @@ export default function AdminUsers() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Users className="w-6 h-6 text-primary" />
       <div className="page-hero flex items-center justify-between mb-6">
         <div className="relative z-10">
           <span className="chip-premium mb-2 inline-flex">Gestão</span>
           <h1 className="type-hero">
-            <span className="text-foreground/90"> </span>
+            <span className="text-foreground/90">Gestão de </span>
             <span className="page-title-gradient">Usuários</span>
           </h1>
         </div>
-      </div>
-          <Badge variant="outline" className="text-xs">{users?.length || 0}</Badge>
-        </div>
+        <Badge variant="outline" className="text-xs shrink-0">{users?.length || 0}</Badge>
       </div>
 
       <div className="relative max-w-xs">

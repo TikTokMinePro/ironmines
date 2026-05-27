@@ -88,8 +88,6 @@ export default function AdminEmailTemplates() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <Mail className="w-6 h-6 text-primary" />
       <div className="page-hero flex items-center justify-between mb-6">
         <div className="relative z-10">
           <span className="chip-premium mb-2 inline-flex">Comunicação</span>
@@ -98,7 +96,6 @@ export default function AdminEmailTemplates() {
             <span className="page-title-gradient">Mensagens</span>
           </h1>
         </div>
-      </div>
       </div>
 
       <div className="flex items-center justify-between">

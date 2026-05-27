@@ -92,9 +92,6 @@ export default function AdminData() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Database className="w-6 h-6 text-primary" />
       <div className="page-hero flex items-center justify-between mb-6">
         <div className="relative z-10">
           <span className="chip-premium mb-2 inline-flex">Mineração</span>
@@ -103,9 +100,7 @@ export default function AdminData() {
             <span className="page-title-gradient">Mineração</span>
           </h1>
         </div>
-      </div>
-        </div>
-        <Button className="gradient-primary text-primary-foreground" onClick={() => forceMine.mutate()} disabled={forceMine.isPending}>
+        <Button className="gradient-primary text-primary-foreground shrink-0 relative z-10" onClick={() => forceMine.mutate()} disabled={forceMine.isPending}>
           {forceMine.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Play className="w-4 h-4 mr-2" />}
           Mineração Completa
         </Button>

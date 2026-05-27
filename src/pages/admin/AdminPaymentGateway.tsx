@@ -127,8 +127,6 @@ export default function AdminPaymentGateway() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <CreditCard className="w-6 h-6 text-primary" />
       <div className="page-hero flex items-center justify-between mb-6">
         <div className="relative z-10">
           <span className="chip-premium mb-2 inline-flex">Financeiro</span>
@@ -137,7 +135,6 @@ export default function AdminPaymentGateway() {
             <span className="page-title-gradient">Pagamento</span>
           </h1>
         </div>
-      </div>
       </div>
 
       {/* Gateway Config */}

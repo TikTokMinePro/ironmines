@@ -77,9 +77,6 @@ export default function AdminCoupons() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Ticket className="w-6 h-6 text-primary" />
       <div className="page-hero flex items-center justify-between mb-6">
         <div className="relative z-10">
           <span className="chip-premium mb-2 inline-flex">Financeiro</span>
@@ -88,9 +85,7 @@ export default function AdminCoupons() {
             <span className="page-title-gradient">Desconto</span>
           </h1>
         </div>
-      </div>
-        </div>
-        <Button className="gradient-primary text-primary-foreground gap-2" onClick={() => setCreateOpen(true)}>
+        <Button className="gradient-primary text-primary-foreground gap-2 shrink-0 relative z-10" onClick={() => setCreateOpen(true)}>
           <Plus className="w-4 h-4" /> Novo Cupom
         </Button>
       </div>
