@@ -8,14 +8,11 @@ interface AuthContextType {
   profile: any | null;
   isAdmin: boolean;
   loading: boolean;
-  justLoggedIn: boolean;
-  clearJustLoggedIn: () => void;
   signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
   session: null, user: null, profile: null, isAdmin: false, loading: true,
-  justLoggedIn: false, clearJustLoggedIn: () => {},
   signOut: async () => {},
 });
 
@@ -27,7 +24,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [justLoggedIn, setJustLoggedIn] = useState(false);
   const initialLoadDone = useRef(false);
 
   const fetchProfile = useCallback(async (userId: string) => {
@@ -67,7 +63,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // Use setTimeout to avoid the Supabase internal deadlock
         setTimeout(async () => {
           await fetchProfile(session.user.id);
-          if (event === "SIGNED_IN") setJustLoggedIn(true);
           setLoading(false);
         }, 0);
       } else {
@@ -113,12 +108,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const clearJustLoggedIn = useCallback(() => setJustLoggedIn(false), []);
-
   // Memoize the context value so referential equality is preserved when nothing changed
   const contextValue = useMemo(() => ({
-    session, user, profile, isAdmin, loading, justLoggedIn, clearJustLoggedIn, signOut,
-  }), [session, user, profile, isAdmin, loading, justLoggedIn, clearJustLoggedIn, signOut]);
+    session, user, profile, isAdmin, loading, signOut,
+  }), [session, user, profile, isAdmin, loading, signOut]);
 
   return (
     <AuthContext.Provider value={contextValue}>

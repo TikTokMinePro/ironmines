@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,8 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AnimatedNumber } from "@/components/AnimatedNumber";
-import { WelcomeScreen } from "@/components/WelcomeScreen";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { PageTransition, PageSection, StaggerGrid, StaggerItem } from "@/components/PageTransition";
 import { DashboardParticles } from "@/components/DashboardParticles";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
@@ -24,18 +23,7 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, BarChart, Bar } from "rec
 import { fmt, fmtBRL } from "@/lib/formatters";
 
 export default function Dashboard() {
-  const { profile, justLoggedIn, clearJustLoggedIn } = useAuth();
-  const [showWelcome, setShowWelcome] = useState(false);
-
-  // Show welcome overlay on first login — content renders behind it
-  useEffect(() => {
-    if (justLoggedIn) setShowWelcome(true);
-  }, [justLoggedIn]);
-
-  const dismissWelcome = () => {
-    clearJustLoggedIn();
-    setShowWelcome(false);
-  };
+  const { profile } = useAuth();
 
   // Top 5 products
   const { data: products, isLoading: loadingProducts } = useQuery({
@@ -156,9 +144,6 @@ export default function Dashboard() {
 
   return (
     <>
-      <AnimatePresence>
-        {showWelcome && <WelcomeScreen onContinue={dismissWelcome} />}
-      </AnimatePresence>
       <PageTransition className="space-y-5 relative" delay={0.1}>
           <DashboardParticles />
           {/* Premium Hero Header */}
