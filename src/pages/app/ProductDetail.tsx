@@ -407,8 +407,8 @@ export default function ProductDetail() {
           <Card key={k.label} className="bg-card border-border/50">
             <CardContent className="p-4 space-y-1">
               <div className={k.color}>{k.icon}</div>
-              <p className="text-xl font-bold text-foreground">{k.value}</p>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wider">{k.label}</p>
+              <p className="type-stat text-foreground">{k.value}</p>
+              <p className="type-overline text-muted-foreground mt-0.5">{k.label}</p>
               {k.sub && <p className="text-[10px] text-muted-foreground">{k.sub}</p>}
             </CardContent>
           </Card>
@@ -419,7 +419,7 @@ export default function ProductDetail() {
       <Card className="bg-card border-border/50">
         <CardContent className="p-5 space-y-4">
           <div className="flex items-center justify-between">
-            <p className="text-sm font-semibold text-foreground flex items-center gap-1.5"><TrendingUp className="w-4 h-4 text-primary" /> Estratégia de Vendas</p>
+            <p className="section-card-title flex items-center gap-1.5"><TrendingUp className="w-4 h-4 text-primary" /> Estratégia de Vendas</p>
             <p className="text-xs text-muted-foreground">Total: {fmtBRL(m.revenue)}</p>
           </div>
           <div className="flex h-4 rounded-full overflow-hidden">
@@ -446,7 +446,7 @@ export default function ProductDetail() {
       {/* Revenue Chart */}
       <Card className="bg-card border-border/50">
         <CardContent className="p-5">
-          <p className="text-sm font-semibold text-foreground mb-4">Receita ao longo do tempo</p>
+          <p className="section-card-title mb-4">Receita ao longo do tempo</p>
           <div className="h-64 w-full">
             <ResponsiveContainer>
               <AreaChart data={chartData}>
@@ -473,8 +473,8 @@ export default function ProductDetail() {
       {/* Vídeos Relacionados */}
       <div className="space-y-3">
         <div>
-          <h2 className="text-sm font-semibold text-foreground flex items-center gap-1.5"><Clapperboard className="w-4 h-4 text-primary" /> Videos Relacionados: Top 3 Vídeos</h2>
-          <p className="text-xs text-muted-foreground">Últimos 30 dias • Por receita</p>
+          <h2 className="section-card-title flex items-center gap-1.5"><Clapperboard className="w-4 h-4 text-primary" /> Videos Relacionados: Top 3 Vídeos</h2>
+          <p className="section-card-subtitle mt-0.5">Últimos 30 dias • Por receita</p>
         </div>
         {linkedVideos && linkedVideos.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">

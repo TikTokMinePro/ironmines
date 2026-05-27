@@ -86,10 +86,10 @@ export default function SettingsPage() {
           </div>
           <div>
             <span className="chip-premium mb-1.5 inline-flex">Sua Conta</span>
-            <h1 className="text-2xl font-display font-bold tracking-tight">
+            <h1 className="type-hero">
               <span className="page-title-gradient">Configurações</span>
             </h1>
-            <p className="text-sm text-muted-foreground/85 mt-0.5">Perfil, segurança e preferências</p>
+            <p className="type-caption text-muted-foreground/80 mt-1.5">Perfil, segurança e preferências</p>
           </div>
         </div>
       </div>

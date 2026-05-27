@@ -69,11 +69,11 @@ export default function CreatorsPage() {
             </div>
             <div>
               <span className="chip-premium mb-1.5 inline-flex">Ranking de Receita</span>
-              <h1 className="text-2xl font-display font-bold tracking-tight">
+              <h1 className="type-hero">
                 <span className="text-foreground/90">Criadores </span>
                 <span className="page-title-gradient">Virais</span>
               </h1>
-              <p className="text-sm text-muted-foreground/85 mt-0.5">Ranking por projeção de faturamento</p>
+              <p className="type-caption text-muted-foreground/80 mt-1.5">Ranking por projeção de faturamento</p>
             </div>
           </div>
         </div>
@@ -117,12 +117,12 @@ export default function CreatorsPage() {
 
                   {/* Info */}
                   <div className="flex-1 min-w-0">
-                    <p className="font-bold text-foreground text-sm font-display">@{c.username}</p>
-                    <p className="text-xs text-muted-foreground">{c.display_name || c.username}</p>
+                    <p className="type-subhead text-foreground">@{c.username}</p>
+                    <p className="type-caption text-muted-foreground">{c.display_name || c.username}</p>
                     <div className="flex items-center gap-1 mt-0.5">
                       <DollarSign className="w-3 h-3 text-success" />
-                      <span className="text-sm font-bold text-success">{fmtBRL(revenue)}</span>
-                      <span className="text-[10px] text-muted-foreground">/mês</span>
+                      <span className="type-data text-success font-bold">{fmtBRL(revenue)}</span>
+                      <span className="type-overline text-muted-foreground normal-case">/mês</span>
                     </div>
                   </div>
 

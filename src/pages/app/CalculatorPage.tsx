@@ -31,11 +31,11 @@ export default function CalculatorPage() {
           </div>
           <div>
             <span className="chip-premium mb-1.5 inline-flex">Simulador</span>
-            <h1 className="text-2xl font-display font-bold tracking-tight">
+            <h1 className="type-hero">
               <span className="text-foreground/90">Calculadora de </span>
               <span className="page-title-gradient">Ganhos</span>
             </h1>
-            <p className="text-sm text-muted-foreground/85 mt-0.5">Projeção realista do seu potencial mensal</p>
+            <p className="type-caption text-muted-foreground/80 mt-1.5">Projeção realista do seu potencial mensal</p>
           </div>
         </div>
       </div>

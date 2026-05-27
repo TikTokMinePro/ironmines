@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Nunito Sans', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Montserrat', 'Nunito Sans', 'system-ui', 'sans-serif'],
+        sans:    ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
+        mono:    ['JetBrains Mono', 'Fira Code', 'ui-monospace', 'monospace'],
       },
       fontSize: {
         'xxs': ['10px', '14px'],

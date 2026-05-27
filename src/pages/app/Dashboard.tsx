@@ -153,12 +153,12 @@ export default function Dashboard() {
                 <span className="chip-premium mb-2 inline-flex">
                   Painel
                 </span>
-                <h1 className="text-xl sm:text-2xl font-display font-bold tracking-tight">
+                <h1 className="type-hero text-xl sm:text-2xl">
                   <span className="text-foreground/90">Olá, </span>
                   <span className="page-title-gradient">{firstName}</span>
                   <Hand className="w-5 h-5 inline-block text-primary/80 ml-2 animate-float-medium" />
                 </h1>
-                <p className="text-xs text-muted-foreground/80 mt-1">Resumo da sua mineração em tempo real</p>
+                <p className="type-caption text-muted-foreground/80 mt-1">Resumo da sua mineração em tempo real</p>
               </div>
               <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground bg-primary/5 border border-primary/15 rounded-md px-2.5 py-1.5 backdrop-blur-sm relative z-10">
                 <Clock className="w-3 h-3 text-primary animate-spin" style={{ animationDuration: '6s' }} />
@@ -181,10 +181,10 @@ export default function Dashboard() {
                         {loadingStats ? (
                           <Skeleton className="h-7 w-16 mb-1" />
                         ) : (
-                          <AnimatedNumber value={kpi.value} className={`text-2xl font-display font-bold ${kpi.color} tabular-nums`} />
+                          <AnimatedNumber value={kpi.value} className={`type-stat-lg ${kpi.color}`} />
                         )}
                         <div className="flex items-center gap-1.5">
-                          <p className="text-[10px] text-muted-foreground mt-0.5 uppercase tracking-wider font-medium">{kpi.label}</p>
+                          <p className="type-overline text-muted-foreground mt-0.5">{kpi.label}</p>
                           {kpi.subtitle && <span className="text-[9px] text-muted-foreground/50 mt-0.5">({kpi.subtitle})</span>}
                         </div>
                       </CardContent>
@@ -210,9 +210,9 @@ export default function Dashboard() {
                           <span className="w-5 h-5 rounded-md bg-white/[0.04] border border-white/[0.06] flex items-center justify-center">
                             <kpi.icon className={`w-3 h-3 ${kpi.color}`} />
                           </span>
-                          <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-medium">{kpi.label}</p>
+                          <p className="type-overline text-muted-foreground">{kpi.label}</p>
                         </div>
-                        <p className={`text-lg font-bold ${kpi.color} tabular-nums drop-shadow-[0_0_8px_hsl(var(--primary)/0.2)]`}>{kpi.value}</p>
+                        <p className={`type-stat ${kpi.color} drop-shadow-[0_0_8px_hsl(var(--primary)/0.18)]`}>{kpi.value}</p>
                       </CardContent>
                     </Card>
                   </TooltipTrigger>
@@ -253,8 +253,8 @@ export default function Dashboard() {
                     <TrendingUp className="w-4 h-4 text-primary relative z-10" />
                   </div>
                   <div>
-                    <h2 className="text-sm font-semibold text-foreground tracking-tight">Top 5 Produtos do Dia</h2>
-                    <p className="text-[10px] text-muted-foreground/80">Maior faturamento 30d</p>
+                    <h2 className="section-card-title">Top 5 Produtos do Dia</h2>
+                    <p className="section-card-subtitle">Maior faturamento 30d</p>
                   </div>
                 </div>
                 <Link to="/app/produtos">
@@ -339,8 +339,8 @@ export default function Dashboard() {
                   <BarChart3 className="w-4 h-4 text-secondary relative z-10" />
                 </div>
                 <div>
-                  <h2 className="text-sm font-semibold text-foreground tracking-tight">Por Loja</h2>
-                  <p className="text-[10px] text-muted-foreground/80">Faturamento 30d</p>
+                  <h2 className="section-card-title">Por Loja</h2>
+                  <p className="section-card-subtitle">Faturamento 30d</p>
                 </div>
               </div>
               {shopChart.length > 0 ? (
@@ -373,8 +373,8 @@ export default function Dashboard() {
                     <Users className="w-4 h-4 text-warning relative z-10" />
                   </div>
                   <div>
-                    <h2 className="text-sm font-semibold text-foreground tracking-tight">Top Criadores</h2>
-                    <p className="text-[10px] text-muted-foreground/80">Maior receita projetada</p>
+                    <h2 className="section-card-title">Top Criadores</h2>
+                    <p className="section-card-subtitle">Maior receita projetada</p>
                   </div>
                 </div>
                 <Link to="/app/criadores">
@@ -427,8 +427,8 @@ export default function Dashboard() {
                     <Play className="w-4 h-4 text-destructive relative z-10" />
                   </div>
                   <div>
-                    <h2 className="text-sm font-semibold text-foreground tracking-tight">Vídeos em Alta</h2>
-                    <p className="text-[10px] text-muted-foreground/80">Mais visualizações</p>
+                    <h2 className="section-card-title">Vídeos em Alta</h2>
+                    <p className="section-card-subtitle">Mais visualizações</p>
                   </div>
                 </div>
                 <Link to="/app/videos">

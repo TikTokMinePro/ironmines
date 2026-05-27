@@ -392,11 +392,11 @@ export default function ProductsPage() {
             </div>
             <div>
               <span className="chip-premium mb-1.5 inline-flex">Mineração Ativa</span>
-              <h1 className="text-2xl font-display font-bold tracking-tight">
+              <h1 className="type-hero">
                 <span className="text-foreground/90">Produtos </span>
                 <span className="page-title-gradient">Virais</span>
               </h1>
-              <p className="text-sm text-muted-foreground/85 mt-0.5">Os mais vendidos do TikTok Shop em tempo real</p>
+              <p className="type-caption text-muted-foreground/80 mt-1.5">Os mais vendidos do TikTok Shop em tempo real</p>
             </div>
           </div>
         </div>

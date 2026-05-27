@@ -51,11 +51,11 @@ export default function CreativesPage() {
           </div>
           <div>
             <span className="chip-premium mb-1.5 inline-flex">Biblioteca IA</span>
-            <h1 className="text-2xl font-display font-bold tracking-tight">
+            <h1 className="type-hero">
               <span className="text-foreground/90">Meus </span>
               <span className="page-title-gradient">Criativos</span>
             </h1>
-            <p className="text-sm text-muted-foreground/85 mt-0.5">Imagens, vídeos e UGC gerados pela Influencer IA</p>
+            <p className="type-caption text-muted-foreground/80 mt-1.5">Imagens, vídeos e UGC gerados pela Influencer IA</p>
           </div>
         </div>
       </div>

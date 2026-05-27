@@ -134,11 +134,11 @@ export default function VideosPage() {
             </div>
             <div>
               <span className="chip-premium mb-1.5 inline-flex">Top BR · 14 dias</span>
-              <h1 className="text-2xl font-display font-bold tracking-tight">
+              <h1 className="type-hero">
                 <span className="text-foreground/90">Vídeos </span>
                 <span className="page-title-gradient">Virais</span>
               </h1>
-              <p className="text-sm text-muted-foreground/85 mt-0.5">
+              <p className="type-caption text-muted-foreground/80 mt-1.5">
                 Top 40 vídeos mais virais do TikTok Shop Brasil
               </p>
             </div>
