@@ -1,49 +1,53 @@
 import {
   LayoutDashboard, Flame, Clapperboard, Crown, Wand2, Image,
-  Calculator, Settings
+  Calculator, Settings, ChevronRight
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent,
   SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar,
 } from "@/components/ui/sidebar";
-import { Badge } from "@/components/ui/badge";
 import logoIronmines from "@/assets/logo-ironmines.png";
 import { useAuth } from "@/contexts/AuthContext";
-import React, { useCallback, useRef, useMemo } from "react";
+import React, { useCallback, useRef } from "react";
 import { cn } from "@/lib/utils";
 
-const group1 = [
+type MenuItem = { title: string; url: string; icon: React.ElementType };
+
+const groupAnalise: MenuItem[] = [
   { title: "Dashboard", url: "/app/dashboard", icon: LayoutDashboard },
-];
-
-const viralUrls = new Set(["/app/produtos", "/app/videos", "/app/criadores", "/app/influencer", "/app/criativos", "/app/calculadora"]);
-
-const group2 = [
   { title: "Produtos Virais", url: "/app/produtos", icon: Flame },
   { title: "Vídeos Virais", url: "/app/videos", icon: Clapperboard },
   { title: "Criadores Virais", url: "/app/criadores", icon: Crown },
 ];
 
-const group3 = [
+const groupIA: MenuItem[] = [
   { title: "Influencer IA", url: "/app/influencer", icon: Wand2 },
   { title: "Meus Criativos", url: "/app/criativos", icon: Image },
   { title: "Calculadora", url: "/app/calculadora", icon: Calculator },
 ];
 
-function SidebarDivider() {
+/* ── Group section header ── */
+function GroupLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative my-3 mx-3">
-      <div className="h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
-      <div className="absolute inset-0 h-px bg-gradient-to-r from-transparent via-primary/8 to-transparent blur-sm" />
+    <div className="sidebar-group-label sidebar-item-enter">
+      <span className="sidebar-group-label-dot" />
+      <span className="sidebar-group-label-text">{children}</span>
+      <span className="sidebar-group-label-line" />
     </div>
   );
 }
 
+/* ── Animated divider ── */
+function SidebarDivider() {
+  return <div className="sidebar-divider-v2" aria-hidden="true" />;
+}
+
+/* ── Icon container with group tint ── */
 function GlowIcon({ icon: Icon }: { icon: React.ElementType }) {
   return (
-    <span className="relative z-10 shrink-0 flex items-center justify-center w-7 h-7 rounded-[8px] bg-gradient-to-br from-white/[0.07] via-white/[0.03] to-transparent border border-white/[0.06] shadow-[0_1px_4px_rgba(255,255,255,0.04)] backdrop-blur-sm transition-all duration-300 group-hover/link:border-white/[0.12] mr-2.5">
-      <Icon className="sidebar-icon-pulse-target h-4 w-4 text-white/55 transition-all duration-300 group-[.sidebar-item-active]/link:text-primary group-[.sidebar-item-active]/link:drop-shadow-[0_0_6px_hsl(var(--primary)/0.5)] group-hover/link:text-white/80" />
+    <span className="sidebar-icon-tint relative z-10 shrink-0 flex items-center justify-center w-7 h-7 rounded-[8px] bg-gradient-to-br from-white/[0.07] via-white/[0.03] to-transparent border border-white/[0.06] shadow-[0_1px_4px_rgba(255,255,255,0.04)] backdrop-blur-sm transition-all duration-300 group-hover/link:border-white/[0.18] group-hover/link:shadow-[0_2px_10px_hsl(var(--primary)/0.15)] mr-2.5">
+      <Icon className="sidebar-icon-pulse-target h-4 w-4 text-white/55 transition-all duration-300 group-[.sidebar-item-active]/link:text-primary group-[.sidebar-item-active]/link:drop-shadow-[0_0_6px_hsl(var(--primary)/0.5)] group-hover/link:text-white/85 group-hover/link:scale-110" />
     </span>
   );
 }
@@ -51,7 +55,6 @@ function GlowIcon({ icon: Icon }: { icon: React.ElementType }) {
 /** Tracks mouse position for the spotlight hover effect */
 function useSpotlight() {
   const ref = useRef<HTMLAnchorElement>(null);
-
   const onMouseMove = useCallback((e: React.MouseEvent) => {
     const el = ref.current;
     if (!el) return;
@@ -59,45 +62,27 @@ function useSpotlight() {
     el.style.setProperty("--mx", `${e.clientX - rect.left}px`);
     el.style.setProperty("--my", `${e.clientY - rect.top}px`);
   }, []);
-
   return { ref, onMouseMove };
 }
 
 const SidebarLink = React.forwardRef<HTMLAnchorElement, {
-  item: { title: string; url: string; icon: React.ElementType };
+  item: MenuItem;
   isDashboard: boolean;
-  isViral: boolean;
   onNavigate?: () => void;
   index: number;
 } & Omit<React.ComponentPropsWithoutRef<typeof NavLink>, "to" | "children">>(
-  ({
-    item,
-    isDashboard,
-    isViral,
-    onNavigate,
-    index,
-    className,
-    onClick,
-    onMouseMove,
-    style,
-    ...props
-  }, forwardedRef) => {
+  ({ item, isDashboard, onNavigate, index, className, onClick, onMouseMove, style, ...props }, forwardedRef) => {
     const { ref, onMouseMove: onSpotlightMouseMove } = useSpotlight();
 
     const setRefs = (node: HTMLAnchorElement | null) => {
       ref.current = node;
-      if (typeof forwardedRef === "function") {
-        forwardedRef(node);
-      } else if (forwardedRef) {
-        forwardedRef.current = node;
-      }
+      if (typeof forwardedRef === "function") forwardedRef(node);
+      else if (forwardedRef) forwardedRef.current = node;
     };
 
     const handleClick: React.MouseEventHandler<HTMLAnchorElement> = (event) => {
       onClick?.(event);
-      if (!event.defaultPrevented) {
-        onNavigate?.();
-      }
+      if (!event.defaultPrevented) onNavigate?.();
     };
 
     const handleMouseMove: React.MouseEventHandler<HTMLAnchorElement> = (event) => {
@@ -114,26 +99,28 @@ const SidebarLink = React.forwardRef<HTMLAnchorElement, {
           onClick={handleClick}
           onMouseMove={handleMouseMove}
           className={cn(
-            "sidebar-link-hover group/link relative flex w-full items-center gap-2 overflow-hidden rounded-lg p-2 text-left text-[13px] transition-all duration-300 bg-primary/10 text-foreground font-semibold border border-primary/20",
+            "sidebar-dashboard-active-v2 sidebar-link-hover group/link relative flex w-full items-center gap-2 overflow-hidden rounded-lg p-2 text-left text-[13px] transition-all duration-300 text-foreground font-semibold",
             className,
           )}
           activeClassName=""
           style={{ ...style, animationDelay: `${index * 50}ms` }}
           {...props}
         >
+          {/* Conic-gradient animated border (via ::before in CSS) */}
+          {/* Pulse ring around icon */}
+          <span className="sidebar-pulse-ring" aria-hidden="true" />
           {/* Spotlight radial glow following cursor */}
           <span className="pointer-events-none absolute inset-0 rounded-lg opacity-0 transition-opacity duration-500 group-hover/link:opacity-100 sidebar-spotlight" />
           {/* Shimmer sweep */}
           <span className="pointer-events-none absolute inset-0 rounded-lg sidebar-shimmer-sweep" />
-          {/* Gradient background */}
-          <span className="pointer-events-none absolute inset-0 rounded-lg bg-gradient-to-r from-primary/12 via-primary/6 to-transparent" />
-          {/* Left active indicator */}
-          <span className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full bg-primary shadow-[0_0_8px_hsl(var(--primary)/0.4)] sidebar-indicator" />
+          {/* Left active indicator (still here, brighter) */}
+          <span className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary)/0.6)] sidebar-indicator z-10" />
 
-          <item.icon className="relative z-10 mr-2.5 h-[16px] w-[16px] shrink-0 text-primary drop-shadow-[0_0_6px_hsl(var(--primary)/0.4)] transition-all duration-300 group-hover/link:drop-shadow-[0_0_10px_hsl(var(--primary)/0.6)] group-hover/link:scale-110" />
+          <item.icon className="relative z-10 ml-1 mr-2.5 h-[16px] w-[16px] shrink-0 text-primary drop-shadow-[0_0_8px_hsl(var(--primary)/0.6)] transition-all duration-300 group-hover/link:drop-shadow-[0_0_14px_hsl(var(--primary)/0.85)] group-hover/link:scale-110" />
           <span className="relative z-10 text-foreground transition-all duration-300 group-hover/link:tracking-wide">
             {item.title}
           </span>
+          <ChevronRight className="relative z-10 ml-auto h-3 w-3 text-primary/60 transition-all duration-300 group-hover/link:translate-x-0.5 group-hover/link:text-primary" />
         </NavLink>
       );
     }
@@ -156,13 +143,8 @@ const SidebarLink = React.forwardRef<HTMLAnchorElement, {
         <span className="pointer-events-none absolute inset-0 rounded-lg opacity-0 transition-opacity duration-500 group-hover/link:opacity-100 sidebar-spotlight" />
         {/* Shimmer sweep on hover */}
         <span className="pointer-events-none absolute inset-0 rounded-lg sidebar-shimmer-sweep" />
-        {/* No active glow bar for non-dashboard items */}
 
-        {isViral ? (
-          <GlowIcon icon={item.icon} />
-        ) : (
-          <item.icon className="sidebar-icon-pulse-target relative z-10 mr-2.5 h-[16px] w-[16px] shrink-0 transition-all duration-300 group-[.sidebar-item-active]/link:text-primary group-[.sidebar-item-active]/link:drop-shadow-[0_0_6px_hsl(var(--primary)/0.5)] group-hover/link:text-white/80 group-hover/link:scale-110" />
-        )}
+        <GlowIcon icon={item.icon} />
         <span className="relative z-10 transition-all duration-300 group-hover/link:translate-x-0.5">
           {item.title}
         </span>
@@ -172,19 +154,17 @@ const SidebarLink = React.forwardRef<HTMLAnchorElement, {
 );
 SidebarLink.displayName = "SidebarLink";
 
-function MenuGroup({ items, onNavigate, startIndex = 0 }: { items: typeof group1; onNavigate?: () => void; startIndex?: number }) {
+function MenuGroup({ items, onNavigate, startIndex = 0, tintClass }: { items: MenuItem[]; onNavigate?: () => void; startIndex?: number; tintClass?: string }) {
   return (
-    <SidebarMenu>
+    <SidebarMenu className={tintClass}>
       {items.map((item, i) => {
         const isDashboard = item.url === "/app/dashboard";
-        const isViral = viralUrls.has(item.url);
         return (
           <SidebarMenuItem key={item.title} className="sidebar-item-enter">
             <SidebarMenuButton asChild>
               <SidebarLink
                 item={item}
                 isDashboard={isDashboard}
-                isViral={isViral}
                 onNavigate={onNavigate}
                 index={startIndex + i}
               />
@@ -213,75 +193,91 @@ const planLabels: Record<string, string> = {
   cancelled: "Cancelado",
 };
 
+function getInitials(name?: string, email?: string): string {
+  if (name) {
+    const parts = name.trim().split(/\s+/);
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }
+  if (email) return email.slice(0, 2).toUpperCase();
+  return "U";
+}
+
 export function AppSidebar() {
-  const { profile, isAdmin } = useAuth();
+  const { user, profile, isAdmin } = useAuth();
   const { setOpenMobile } = useSidebar();
-  const { ref, onMouseMove } = useSpotlight();
 
   const closeMobile = useCallback(() => setOpenMobile(false), [setOpenMobile]);
 
   const planName = isAdmin ? "Admin" : (planLabels[profile?.subscription_status] || "Basic");
+  const displayName: string = profile?.name || user?.email?.split("@")[0] || "Usuário";
+  const initials = getInitials(profile?.name, user?.email);
 
   return (
     <Sidebar collapsible="offcanvas" className="border-r-0">
       <SidebarContent className="sidebar-premium px-1 sm:px-0">
-        {/* Logo area */}
-        <div className="flex justify-center pt-6 pb-3 sidebar-item-enter" style={{ animationDelay: '0ms' }}>
-          <img src={logoIronmines} alt="IronMines" className="h-20 w-auto" />
+        {/* Ambient orbs */}
+        <div className="sidebar-orb sidebar-orb-1" aria-hidden="true" />
+        <div className="sidebar-orb sidebar-orb-2" aria-hidden="true" />
+
+        {/* Logo */}
+        <div className="flex justify-center pt-6 pb-4 sidebar-item-enter relative z-10" style={{ animationDelay: '0ms' }}>
+          <div className="sidebar-logo-wrap">
+            <span className="sidebar-logo-glow" aria-hidden="true" />
+            <img src={logoIronmines} alt="IronMines" className="h-20 w-auto" />
+          </div>
         </div>
 
-        <SidebarGroup className="px-3 sm:px-2">
-          <div className="px-2 mb-1 sidebar-item-enter" style={{ animationDelay: '30ms' }}>
-            <span className="text-[9px] uppercase tracking-[0.15em] font-semibold text-muted-foreground/40">
-              Menu
-            </span>
-          </div>
+        <SidebarGroup className="px-3 sm:px-2 relative z-10">
           <SidebarGroupContent>
-            <MenuGroup items={group1} onNavigate={closeMobile} startIndex={1} />
-            <SidebarDivider />
-            <MenuGroup items={group2} onNavigate={closeMobile} startIndex={2} />
-            <SidebarDivider />
-            <MenuGroup items={group3} onNavigate={closeMobile} startIndex={5} />
-            <SidebarDivider />
-            <SidebarMenu>
-              <SidebarMenuItem className="sidebar-item-enter" style={{ animationDelay: '400ms' }}>
-                <SidebarMenuButton asChild>
-                  <NavLink
-                    ref={ref}
-                    to="/app/configuracoes"
-                    onClick={closeMobile}
-                    onMouseMove={onMouseMove}
-                    className="sidebar-link-hover group/link relative overflow-hidden rounded-lg text-[13px] text-sidebar-foreground/70 transition-all duration-300 hover:text-sidebar-foreground"
-                    activeClassName="sidebar-item-active"
-                  >
-                    {/* Spotlight radial glow */}
-                    <span className="pointer-events-none absolute inset-0 rounded-lg opacity-0 transition-opacity duration-500 group-hover/link:opacity-100 sidebar-spotlight" />
-                    <span className="pointer-events-none absolute inset-0 rounded-lg sidebar-shimmer-sweep" />
-                    {/* No glow bar for settings */}
+            {/* Análise group */}
+            <GroupLabel>Análise Viral</GroupLabel>
+            <div className="sidebar-group-analise">
+              <MenuGroup items={groupAnalise} onNavigate={closeMobile} startIndex={1} tintClass="sidebar-group-analise" />
+            </div>
 
-                    <GlowIcon icon={Settings} />
-                    <div className="relative z-10 flex items-center gap-2 flex-1">
-                      <span className="transition-all duration-300 group-[.sidebar-item-active]/link:text-foreground group-[.sidebar-item-active]/link:font-semibold group-hover/link:translate-x-0.5">Conta</span>
-                      <Badge className="ml-auto text-[8px] px-1.5 py-0 h-[16px] border-0 bg-primary/15 text-primary/80 font-semibold tracking-wide">
-                        {planName}
-                      </Badge>
-                    </div>
-                  </NavLink>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
+            <SidebarDivider />
+
+            {/* IA group */}
+            <GroupLabel>Ferramentas IA</GroupLabel>
+            <div className="sidebar-group-ia">
+              <MenuGroup items={groupIA} onNavigate={closeMobile} startIndex={6} tintClass="sidebar-group-ia" />
+            </div>
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* Floating particles — static array defined at module scope, no Array.from() on each render */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        {/* Spacer pushes account card to bottom */}
+        <div className="flex-1" />
+
+        {/* Premium Account Card at bottom */}
+        <div className="relative z-10 sidebar-item-enter" style={{ animationDelay: '500ms' }}>
+          <NavLink
+            to="/app/configuracoes"
+            onClick={closeMobile}
+            className="sidebar-account-card group/acc"
+            activeClassName="ring-1 ring-primary/40"
+          >
+            <div className="sidebar-account-avatar">
+              {initials}
+              <span className="sidebar-account-status" aria-hidden="true" />
+            </div>
+            <div className="flex flex-col min-w-0 flex-1">
+              <span className="sidebar-account-name" title={displayName}>{displayName}</span>
+              <span className="sidebar-account-plan">{planName}</span>
+            </div>
+            <Settings className="sidebar-account-gear h-4 w-4" />
+          </NavLink>
+        </div>
+
+        {/* Floating particles */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden z-0" aria-hidden="true">
           {SIDEBAR_PARTICLES.map((p, i) => (
             <span key={i} className="sidebar-particle" style={p} />
           ))}
         </div>
 
         {/* Bottom ambient glow */}
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-primary/[0.03] to-transparent" />
+        <div className="sidebar-bottom-glow" aria-hidden="true" />
       </SidebarContent>
     </Sidebar>
   );

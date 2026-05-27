@@ -617,6 +617,345 @@
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   PREMIUM SIDEBAR v2 — Cinematic enhancements
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Ambient floating orbs in background */
+.sidebar-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+}
+.sidebar-orb-1 {
+  width: 200px; height: 200px;
+  top: 15%; left: -30%;
+  background: radial-gradient(circle, hsl(var(--primary) / 0.18), transparent 70%);
+  animation: sidebar-orb-drift-1 22s ease-in-out infinite;
+}
+.sidebar-orb-2 {
+  width: 180px; height: 180px;
+  bottom: 25%; right: -30%;
+  background: radial-gradient(circle, hsl(var(--primary) / 0.12), transparent 70%);
+  animation: sidebar-orb-drift-2 28s ease-in-out infinite;
+}
+@keyframes sidebar-orb-drift-1 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(40px,-30px) scale(1.2); }
+}
+@keyframes sidebar-orb-drift-2 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(-35px,40px) scale(1.15); }
+}
+
+/* Group section headers */
+.sidebar-group-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px;
+  margin: 6px 4px 6px;
+}
+.sidebar-group-label-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  box-shadow: 0 0 8px hsl(var(--primary) / 0.6);
+  flex-shrink: 0;
+  animation: sidebar-group-dot-pulse 3s ease-in-out infinite;
+}
+@keyframes sidebar-group-dot-pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.sidebar-group-label-text {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: hsl(var(--primary) / 0.75);
+  text-transform: uppercase;
+  text-shadow: 0 0 12px hsl(var(--primary) / 0.3);
+}
+.sidebar-group-label-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, hsl(var(--primary) / 0.3), hsl(var(--primary) / 0.05) 60%, transparent);
+}
+
+/* Dashboard active — v2 with animated gradient border + glow */
+.sidebar-dashboard-active-v2 {
+  position: relative;
+  background: linear-gradient(110deg,
+    hsl(var(--primary) / 0.20) 0%,
+    hsl(var(--primary) / 0.08) 40%,
+    hsl(var(--primary) / 0.02) 70%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 0 1px hsl(var(--primary) / 0.25),
+    0 6px 22px -6px hsl(var(--primary) / 0.4),
+    inset 0 1px 0 hsl(var(--primary) / 0.15);
+}
+.sidebar-dashboard-active-v2::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  padding: 1px;
+  background: conic-gradient(from 0deg,
+    hsl(var(--primary) / 0.7),
+    transparent 30%,
+    transparent 50%,
+    hsl(var(--primary) / 0.5) 70%,
+    transparent 80%,
+    hsl(var(--primary) / 0.7) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  animation: sidebar-conic-spin 6s linear infinite;
+}
+@keyframes sidebar-conic-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Pulse ring around dashboard icon container */
+.sidebar-pulse-ring {
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid hsl(var(--primary) / 0.5);
+  transform: translateY(-50%);
+  pointer-events: none;
+  animation: sidebar-pulse-ring-anim 2.2s ease-in-out infinite;
+}
+@keyframes sidebar-pulse-ring-anim {
+  0%, 100% {
+    opacity: 0.7;
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    opacity: 0;
+    transform: translateY(-50%) scale(1.35);
+  }
+}
+
+/* Animated divider — pulsing shimmer */
+.sidebar-divider-v2 {
+  position: relative;
+  height: 1px;
+  margin: 12px 12px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    hsl(var(--primary) / 0.2) 30%,
+    hsl(var(--primary) / 0.35) 50%,
+    hsl(var(--primary) / 0.2) 70%,
+    transparent 100%
+  );
+  overflow: hidden;
+}
+.sidebar-divider-v2::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -30%;
+  width: 30%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    hsl(var(--primary) / 0.8),
+    transparent
+  );
+  animation: sidebar-divider-shimmer 4s ease-in-out infinite;
+}
+@keyframes sidebar-divider-shimmer {
+  0%, 100% { left: -30%; opacity: 0; }
+  50% { left: 130%; opacity: 1; }
+}
+
+/* Premium account card at bottom */
+.sidebar-account-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 6px 8px;
+  padding: 10px;
+  border-radius: 12px;
+  background: linear-gradient(135deg,
+    hsl(var(--primary) / 0.10) 0%,
+    hsl(0 0% 100% / 0.02) 50%,
+    transparent 100%
+  );
+  border: 1px solid hsl(var(--primary) / 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+}
+.sidebar-account-card:hover {
+  border-color: hsl(var(--primary) / 0.4);
+  background: linear-gradient(135deg,
+    hsl(var(--primary) / 0.16) 0%,
+    hsl(0 0% 100% / 0.04) 50%,
+    transparent 100%
+  );
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px -8px hsl(var(--primary) / 0.5);
+}
+.sidebar-account-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(120deg,
+    transparent 0%,
+    hsl(var(--primary) / 0.10) 50%,
+    transparent 100%
+  );
+  transition: left 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+.sidebar-account-card:hover::before {
+  left: 160%;
+}
+.sidebar-account-avatar {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(120 70% 28%));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: hsl(var(--primary-foreground));
+  flex-shrink: 0;
+  box-shadow:
+    0 0 14px -2px hsl(var(--primary) / 0.6),
+    inset 0 1px 0 hsl(0 0% 100% / 0.2);
+  letter-spacing: -0.01em;
+}
+.sidebar-account-status {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  border: 2px solid hsl(240 4% 6%);
+  box-shadow: 0 0 4px hsl(var(--primary));
+  animation: sidebar-status-pulse 2s ease-in-out infinite;
+}
+@keyframes sidebar-status-pulse {
+  0%, 100% { box-shadow: 0 0 4px hsl(var(--primary)), 0 0 0 0 hsl(var(--primary) / 0.5); }
+  50% { box-shadow: 0 0 6px hsl(var(--primary)), 0 0 0 4px hsl(var(--primary) / 0); }
+}
+.sidebar-account-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: hsl(var(--foreground));
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sidebar-account-plan {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: hsl(var(--primary));
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.sidebar-account-plan::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  box-shadow: 0 0 4px hsl(var(--primary));
+}
+.sidebar-account-gear {
+  margin-left: auto;
+  opacity: 0.4;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+.sidebar-account-card:hover .sidebar-account-gear {
+  opacity: 0.9;
+  transform: rotate(45deg);
+  color: hsl(var(--primary));
+}
+
+/* Group-specific icon container tints (set on parent class) */
+.sidebar-group-analise .sidebar-icon-tint {
+  background: linear-gradient(135deg, hsl(120 100% 50% / 0.10), hsl(120 100% 30% / 0.02));
+  border-color: hsl(120 100% 50% / 0.18);
+}
+.sidebar-group-ia .sidebar-icon-tint {
+  background: linear-gradient(135deg, hsl(180 100% 50% / 0.10), hsl(200 100% 50% / 0.02));
+  border-color: hsl(170 100% 50% / 0.18);
+}
+
+/* Logo with floating + glow */
+.sidebar-logo-wrap {
+  position: relative;
+  display: inline-block;
+}
+.sidebar-logo-wrap img {
+  animation: sidebar-logo-float 5s ease-in-out infinite;
+  filter: drop-shadow(0 0 18px hsl(var(--primary) / 0.25));
+  transition: filter 0.4s ease;
+  position: relative;
+  z-index: 1;
+}
+.sidebar-logo-wrap:hover img {
+  filter: drop-shadow(0 0 28px hsl(var(--primary) / 0.5));
+}
+@keyframes sidebar-logo-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+.sidebar-logo-glow {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(ellipse 70% 55% at 50% 50%, hsl(var(--primary) / 0.22), transparent 70%);
+  filter: blur(24px);
+  pointer-events: none;
+  z-index: 0;
+  animation: sidebar-logo-pulse 4s ease-in-out infinite;
+}
+@keyframes sidebar-logo-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* Bottom area edge glow */
+.sidebar-bottom-glow {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 220px;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, hsl(var(--primary) / 0.08), transparent 75%);
+  pointer-events: none;
+  z-index: 0;
+}
+
 /* ─── 3D Card System ─── */
 .card-3d {
   background: 
