@@ -685,19 +685,25 @@
   background: linear-gradient(90deg, hsl(var(--primary) / 0.3), hsl(var(--primary) / 0.05) 60%, transparent);
 }
 
-/* Dashboard active — v2 with animated gradient border + glow */
+/* @property for smooth conic-gradient angle animation */
+@property --sda-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* Dashboard active — clean spinning border via angle-only animation */
 .sidebar-dashboard-active-v2 {
   position: relative;
   background: linear-gradient(110deg,
-    hsl(var(--primary) / 0.20) 0%,
-    hsl(var(--primary) / 0.08) 40%,
-    hsl(var(--primary) / 0.02) 70%,
+    hsl(var(--primary) / 0.14) 0%,
+    hsl(var(--primary) / 0.05) 50%,
     transparent 100%
   );
   box-shadow:
-    0 0 0 1px hsl(var(--primary) / 0.25),
-    0 6px 22px -6px hsl(var(--primary) / 0.4),
-    inset 0 1px 0 hsl(var(--primary) / 0.15);
+    0 0 0 1px hsl(var(--primary) / 0.18),
+    0 4px 16px -6px hsl(var(--primary) / 0.22),
+    inset 0 1px 0 hsl(var(--primary) / 0.10);
 }
 .sidebar-dashboard-active-v2::before {
   content: '';
@@ -705,25 +711,26 @@
   inset: 0;
   border-radius: 8px;
   padding: 1px;
-  background: conic-gradient(from 0deg,
-    hsl(var(--primary) / 0.7),
+  background: conic-gradient(from var(--sda-angle),
+    transparent 0%,
     transparent 30%,
-    transparent 50%,
-    hsl(var(--primary) / 0.5) 70%,
+    hsl(var(--primary) / 0.55) 50%,
+    hsl(var(--primary) / 0.80) 58%,
+    hsl(var(--primary) / 0.55) 66%,
     transparent 80%,
-    hsl(var(--primary) / 0.7) 100%
+    transparent 100%
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
   pointer-events: none;
-  animation: sidebar-conic-spin 6s linear infinite;
+  animation: sidebar-conic-spin 5s linear infinite;
 }
 @keyframes sidebar-conic-spin {
-  to { transform: rotate(360deg); }
+  to { --sda-angle: 360deg; }
 }
 
-/* Pulse ring around dashboard icon container */
+/* Subtle pulse ring around dashboard icon */
 .sidebar-pulse-ring {
   position: absolute;
   left: 6px;
@@ -731,19 +738,19 @@
   width: 28px;
   height: 28px;
   border-radius: 8px;
-  border: 1px solid hsl(var(--primary) / 0.5);
+  border: 1px solid hsl(var(--primary) / 0.35);
   transform: translateY(-50%);
   pointer-events: none;
-  animation: sidebar-pulse-ring-anim 2.2s ease-in-out infinite;
+  animation: sidebar-pulse-ring-anim 2.8s ease-in-out infinite;
 }
 @keyframes sidebar-pulse-ring-anim {
   0%, 100% {
-    opacity: 0.7;
+    opacity: 0.5;
     transform: translateY(-50%) scale(1);
   }
-  50% {
+  55% {
     opacity: 0;
-    transform: translateY(-50%) scale(1.35);
+    transform: translateY(-50%) scale(1.45);
   }
 }
 
