@@ -6480,46 +6480,19 @@ body.site-nav-menu-open .site-nav-drawer {
   .ticker-item svg { width: 10px; height: 10px; flex-shrink: 0; }
   .ticker-item .lbl { font-size: 10px; }
 
-  /* ── Dobra-2: ? animation no canto INFERIOR direito, texto limitado a 62% ──
-     O texto fica confinado à coluna esquerda (62%), reservando os 38% direitos
-     para o ? animation. Sem sobreposição, sem espaço vazio absurdo. */
+  /* ── Dobra-2: ? animation OCULTA no mobile ──
+     Em mobile o card de texto ocupa 100% da largura. O ? animation foi removido
+     visualmente (display:none) para uma leitura mais limpa. */
   .dobra-2-left-card {
     min-height: auto !important;
-    padding: 24px 18px 20px !important;
-    overflow: hidden !important;
+    padding: 24px 18px 24px !important;
     position: relative !important;
   }
-  /* Texto confinado à esquerda — deixa espaço para o ? na direita */
   .dobra-2-card-content {
-    max-width: 62% !important;
+    max-width: 100% !important;
   }
-  /* ? badge BOTTOM-RIGHT — alinhado verticalmente com o ultimo paragrafo.
-     Mask gradient no topo (mesmo efeito do desktop) — fade suave em vez de corte
-     reto, fazendo o topo do ? se dissolver elegantemente no fundo do card. */
   .dobra-2-card-visual {
-    top: auto !important;
-    bottom: 16px !important;
-    right: 8px !important;
-    left: auto !important;
-    width: 34% !important;
-    max-width: 130px !important;
-    max-height: 160px !important;
-    overflow: hidden !important;
-    opacity: 1 !important;
-    transform: none !important;
-    visibility: visible !important;
-    z-index: 5 !important;
-    pointer-events: none !important;
-    /* Fade no topo — 0% transparente, 28% solido (mesmo desktop) */
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 100%) !important;
-    mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 100%) !important;
-  }
-  .dobra-2-card-visual video {
-    width: 100% !important;
-    height: auto !important;
-    max-height: 160px !important;
-    object-fit: contain !important;
-    object-position: bottom center !important;
+    display: none !important;
   }
 
   /* ── Dobra-4: edge-to-edge dashboard preview ── */
