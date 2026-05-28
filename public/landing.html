@@ -6493,7 +6493,9 @@ body.site-nav-menu-open .site-nav-drawer {
   .dobra-2-card-content {
     max-width: 62% !important;
   }
-  /* ? badge BOTTOM-RIGHT — alinhado verticalmente com o ultimo paragrafo */
+  /* ? badge BOTTOM-RIGHT — alinhado verticalmente com o ultimo paragrafo.
+     Mask gradient no topo (mesmo efeito do desktop) — fade suave em vez de corte
+     reto, fazendo o topo do ? se dissolver elegantemente no fundo do card. */
   .dobra-2-card-visual {
     top: auto !important;
     bottom: 16px !important;
@@ -6508,6 +6510,9 @@ body.site-nav-menu-open .site-nav-drawer {
     visibility: visible !important;
     z-index: 5 !important;
     pointer-events: none !important;
+    /* Fade no topo — 0% transparente, 28% solido (mesmo desktop) */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 100%) !important;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 100%) !important;
   }
   .dobra-2-card-visual video {
     width: 100% !important;
