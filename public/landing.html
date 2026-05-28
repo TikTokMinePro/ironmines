@@ -6379,10 +6379,10 @@ body.site-nav-menu-open .site-nav-drawer {
   .ticker-item svg { width: 10px; height: 10px; flex-shrink: 0; }
   .ticker-item .lbl { font-size: 10px; }
 
-  /* ── Dobra-2: hide side video, show text full-width ── */
-  .dobra-2-card-visual   { display: none !important; }
-  .dobra-2-card-content  { max-width: 100% !important; }
-  .dobra-2-left-card     { min-height: auto !important; }
+  /* ── Dobra-2: keep the ? animation visible (original mobile CSS already handles
+     the 58%/44% split — left text / right visual). Just ensure min-height is auto
+     so the card doesn't add unnecessary empty space. ── */
+  .dobra-2-left-card { min-height: auto !important; }
 
   /* ── Dobra-4: make dashboard preview fill mobile width ── */
   .dobra-4 {
