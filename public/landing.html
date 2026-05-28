@@ -6218,17 +6218,36 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
    The base .site-nav-links has display:none but a rogue rule above overrides it.
    Re-hide nav links on mobile and remove the overflowing header CTA button. */
 @media (max-width: 1024px) {
+  /* Hide nav links on mobile — hamburger drawer handles navigation */
   .site-nav-links {
     display: none !important;
   }
-  /* CTA button in nav header hidden on mobile — drawer has its own */
-  .site-nav-actions .container-botao {
+  /* Hide entire actions block (CTA + login) in the header on mobile.
+     The drawer already has both. Leaves a clean [Logo ←→ Hamburger] layout. */
+  .site-nav-actions {
     display: none !important;
   }
-  /* Ensure actions row doesn't overflow */
-  .site-nav-actions {
-    gap: 10px !important;
-    flex-shrink: 0 !important;
+  /* Hamburger: make it clearly visible and premium-looking on mobile */
+  .site-nav-toggle {
+    display: flex !important;
+    background: rgba(0, 224, 0, 0.08) !important;
+    border: 1px solid rgba(0, 224, 0, 0.28) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 0 14px rgba(0, 224, 0, 0.15), inset 0 1px 0 rgba(255,255,255,0.05) !important;
+    width: 44px !important;
+    height: 44px !important;
+  }
+  .site-nav-toggle:active {
+    background: rgba(0, 224, 0, 0.16) !important;
+    transform: scale(0.95);
+  }
+  /* Slightly shorter logo on mobile to match the compact header */
+  .site-nav-logo img {
+    height: 36px !important;
+  }
+  /* Make scrolled nav match the tighter mobile header */
+  .site-nav.is-scrolled {
+    background: rgba(6, 10, 6, 0.94) !important;
   }
 }
 
@@ -6276,31 +6295,57 @@ body.site-nav-menu-open .site-nav-drawer {
   .dobra-4-video-outer::before { animation: none !important; }
   @keyframes d4BarRotate   { from{} to{} } /* neutralise */
 
-  /* ── Nav drawer: full-width CTA button on mobile ── */
+  /* ── Nav bar: compact and balanced on mobile ── */
+  .site-nav-bar {
+    padding: 10px 16px !important;
+    min-height: 56px !important;
+  }
+
+  /* ── Nav drawer: improved layout ── */
+  .site-nav-drawer {
+    padding: 8px 20px max(24px, env(safe-area-inset-bottom, 20px)) 20px !important;
+  }
+  .site-nav-drawer-links a {
+    min-height: 52px;
+    padding: 14px 6px;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    -webkit-tap-highlight-color: transparent;
+    color: rgba(255,255,255,0.80) !important;
+  }
+  .site-nav-drawer-links a:hover,
+  .site-nav-drawer-links a:active {
+    color: #fff !important;
+  }
+  /* Drawer CTA: full-width stacked */
   .site-nav-drawer-cta {
     grid-template-columns: 1fr !important;
     gap: 14px !important;
-    padding-top: 16px !important;
-    justify-items: center !important;
+    padding-top: 20px !important;
+    justify-items: stretch !important;
   }
-  .site-nav-drawer-cta .container-botao,
+  .site-nav-drawer-cta .container-botao {
+    width: 100% !important;
+    margin: 0 !important;
+  }
   .site-nav-drawer-cta .botao {
     width: 100% !important;
   }
   .site-nav-drawer-cta .botao .btn-cta {
     width: 100% !important;
     font-size: 16px !important;
-    padding: 14px 20px !important;
+    padding: 15px 20px !important;
     text-align: center !important;
+    border-radius: 12px !important;
+    box-sizing: border-box !important;
   }
-  .site-nav-toggle {
-    -webkit-tap-highlight-color: transparent;
-  }
-  .site-nav-drawer-links a {
-    min-height: 50px;
-    display: flex;
-    align-items: center;
-    -webkit-tap-highlight-color: transparent;
+  /* Login link in drawer: larger touch target */
+  .site-nav-drawer-cta .site-nav-login {
+    justify-content: center !important;
+    font-size: 15px !important;
+    padding: 10px 0 !important;
+    min-height: 44px !important;
   }
 
   /* ── Hero ── */
