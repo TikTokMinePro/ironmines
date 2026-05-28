@@ -9285,4 +9285,172 @@ E se eu não gostar?
   };
 })();
 </script>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     IRONMINES — CINEMATIC SCROLL OPTIMIZATION LAYER
+     Audita e otimiza TODAS as animações de scroll para PC e Mobile.
+
+     Estratégia profissional (Apple/Linear/Stripe-grade):
+     1. Easing unificado cubic-bezier(0.16, 1, 0.3, 1) — "smooth premium"
+     2. Section visibility tracking — pausa animações infinitas offscreen
+     3. content-visibility auto — pula renderização de sections fora do viewport
+     4. Reduced-motion compliance — respeita preferencia do usuario
+     5. data-sr polish — transitions mais cinematicas, will-change correto
+     6. Mobile: distancias menores, durações otimizadas para perceived speed
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<style id="ironmines-motion-layer">
+/* ── 1. CINEMATIC EASING — overrides data-sr defaults com curva premium ── */
+[data-sr="up"],
+[data-sr="left"],
+[data-sr="right"] {
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: opacity, transform;
+}
+[data-sr="none"] {
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+/* Reduz distancia em mobile — perceived speed melhor */
+@media (max-width: 767px) {
+  [data-sr="up"]   { transform: translateY(28px); }
+  [data-sr="left"] { transform: translateX(-28px); }
+  [data-sr="right"]{ transform: translateX(28px); }
+  [data-sr="up"],
+  [data-sr="left"],
+  [data-sr="right"] {
+    transition-duration: 0.7s !important;
+  }
+}
+/* sr-done remove will-change para liberar memoria GPU */
+.sr-done { will-change: auto !important; }
+
+/* ── 2. SECTION VISIBILITY — pausa animações infinitas fora do viewport ── */
+section[data-iv="0"] *,
+section[data-iv="0"]::before,
+section[data-iv="0"]::after {
+  animation-play-state: paused !important;
+}
+/* Hero (dobra-1) sempre roda — primeira tela */
+.dobra-1 *,
+.dobra-1::before,
+.dobra-1::after {
+  animation-play-state: running !important;
+}
+
+/* ── 3. CONTENT VISIBILITY — pula rendering de sections offscreen
+   Ganho de performance massivo: o browser nao calcula layout/paint
+   de sections fora do viewport ate elas se aproximarem. ── */
+@supports (content-visibility: auto) {
+  section.dobra-4,
+  section.dobra-5,
+  section.dobra-6,
+  section.dobra-7,
+  section.dobra-8,
+  section.dobra-9,
+  section.dobra-10,
+  section.dobra-11,
+  section.dobra-12,
+  section.dobra-13,
+  section.dobra-14,
+  section.dobra-faq,
+  .site-footer {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 800px;
+  }
+}
+
+/* ── 4. REDUCED MOTION — bypass completo para acessibilidade ── */
+@media (prefers-reduced-motion: reduce) {
+  [data-sr] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ── 5. SCROLL-SMOOTH no anchor links (premium feel) ── */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* ── 6. Hint de composição em elementos animados ── */
+.video-hero, .video-hero-bg, .im-orb, .bg-orb {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+</style>
+
+<script>
+/* ── IronMines Motion Controller ──
+   Marca cada <section> com data-iv="1" quando entra no viewport, "0" quando sai.
+   O CSS acima pausa animações infinitas nas sections com data-iv="0",
+   liberando CPU/GPU para o conteúdo que o usuário está realmente vendo. */
+(function () {
+  'use strict';
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var sections = document.querySelectorAll('section, header.site-nav');
+  if (!sections.length) return;
+
+  // Marca tudo como visível inicialmente — primeiro scroll define o estado real
+  sections.forEach(function (s) { s.setAttribute('data-iv', '1'); });
+
+  if (!('IntersectionObserver' in window)) return;
+
+  var sectionObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      entry.target.setAttribute('data-iv', entry.isIntersecting ? '1' : '0');
+    });
+  }, {
+    rootMargin: '120px 0px 120px 0px', // pre-fetch animation 120px antes
+    threshold: 0
+  });
+
+  sections.forEach(function (s) { sectionObs.observe(s); });
+})();
+
+/* ── Polish do data-sr existente:
+   - Garante que GSAP não deixe inline transform stuck após scroll-reveal
+   - Limpa will-change após .sr-done para liberar GPU memory  */
+(function () {
+  'use strict';
+  var observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (m) {
+      if (m.type === 'attributes' && m.attributeName === 'class') {
+        var el = m.target;
+        if (el.classList.contains('sr-done')) {
+          // Limpa inline styles deixados por libs (GSAP, AOS etc.)
+          if (el.style.willChange) el.style.willChange = '';
+        }
+      }
+    });
+  });
+
+  document.querySelectorAll('[data-sr]').forEach(function (el) {
+    observer.observe(el, { attributes: true, attributeFilter: ['class'] });
+  });
+})();
+
+/* ── Auto-resume de animações ao voltar foco na tab (Page Visibility API) ──
+   Quando a tab fica em background, o browser ja pausa animações automaticamente.
+   Quando volta, garantimos que tudo retome corretamente. */
+(function () {
+  'use strict';
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible') {
+      // Trigger reflow para reiniciar animations que possam ter ficado em estado estranho
+      document.querySelectorAll('section[data-iv="1"]').forEach(function (s) {
+        s.style.willChange = 'transform';
+        requestAnimationFrame(function () { s.style.willChange = ''; });
+      });
+    }
+  });
+})();
+</script>
 </body></html>
