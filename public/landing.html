@@ -6424,13 +6424,14 @@ body.site-nav-menu-open .site-nav-drawer {
 
   /* ── Dobra-1: switch to BLOCK so video → title → CTA stack in document order
      Flex layout allows GSAP transforms and negative margins from desktop CSS to
-     cause overlaps; block layout is strictly top-to-bottom, no surprises. ── */
+     cause overlaps; block layout is strictly top-to-bottom, no surprises.
+     padding-bottom: 110px = ticker (~40px) + 70px de respiro entre CTA e ticker */
   .dobra-1 {
     display: block !important;
     min-height: auto !important;
     height: auto !important;
     padding-top: calc(var(--site-nav-h, 58px) + 14px) !important;
-    padding-bottom: 48px !important;
+    padding-bottom: 110px !important;
   }
 
   /* ── Hero video ──
