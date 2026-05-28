@@ -6398,23 +6398,28 @@ body.site-nav-menu-open .site-nav-drawer {
     min-height: 44px !important;
   }
 
-  /* ── Dobra-1: stack from top, not centered — predictable on all iOS sizes ── */
+  /* ── Dobra-1: switch to BLOCK so video → title → CTA stack in document order
+     Flex layout allows GSAP transforms and negative margins from desktop CSS to
+     cause overlaps; block layout is strictly top-to-bottom, no surprises. ── */
   .dobra-1 {
-    justify-content: flex-start !important;
-    padding-top: calc(var(--site-nav-h, 58px) + 20px) !important;
-    padding-bottom: 40px !important;
+    display: block !important;
+    min-height: auto !important;
+    height: auto !important;
+    padding-top: calc(var(--site-nav-h, 58px) + 14px) !important;
+    padding-bottom: 48px !important;
   }
 
   /* ── Hero video ──
+     • display:block + margin:auto — centers in block layout
      • explicit height (52vw ≈ 16:9 at 92% width) — avoids iOS Safari flex+aspect-ratio bug
-     • mask:none — removes the bottom-fade gradient that hides most of the video
-     • margin-top:0 — section padding already handles the nav offset */
+     • mask:none — removes the bottom-fade gradient that hides most of the video */
   .video-hero {
+    display: block !important;
     width: 92% !important;
     height: 52vw !important;
     min-height: 190px !important;
     max-height: none !important;
-    margin-top: 0 !important;
+    margin: 0 auto !important;
     /* Override ALL mask variants — shorthand + sub-property + webkit */
     mask: none !important;
     -webkit-mask: none !important;
@@ -6431,22 +6436,27 @@ body.site-nav-menu-open .site-nav-drawer {
   }
   .video-hero-play-btn { z-index: 10 !important; }
 
-  /* ── Hero title: stack BELOW the video ── */
+  /* ── Hero title: sits BELOW the video, never overlaps ── */
   .hero-title {
-    margin-top: 20px !important;
-    margin-bottom: 16px !important;
+    display: block !important;
+    margin: 22px auto 16px !important;
+    padding: 0 16px !important;
     z-index: 2 !important;
+    position: relative !important;
     font-size: 24px !important;
     line-height: 1.28 !important;
+    /* Ensure no GSAP inline transform is left stuck */
+    transform: none !important;
   }
 
   /* ── CTA: full-width below title ── */
   .hero-cta {
+    display: block !important;
     position: relative !important;
     z-index: 5 !important;
     width: 90% !important;
     max-width: 360px !important;
-    margin-top: 4px !important;
+    margin: 4px auto 0 !important;
   }
   .hero-cta .container-botao,
   .hero-cta .botao { width: 100% !important; }
@@ -6471,13 +6481,24 @@ body.site-nav-menu-open .site-nav-drawer {
      left card into the cards-list area, out of view. Fix: use top + right instead. */
   .dobra-2-left-card { min-height: auto !important; }
   /* Position ? animation top-right of the left card
-     Section has 44px top padding, so top:90px lands inside the card */
+     Section has 44px top padding, so top:90px lands inside the card.
+     CRITICAL: data-sr="right" starts at opacity:0 + translateX(40px). Override BOTH
+     here so the element is always visible regardless of IntersectionObserver state. */
   .dobra-2-card-visual {
     top: 90px !important;
     bottom: auto !important;
     right: 6px !important;
     width: 48% !important;
     max-width: 185px !important;
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+  /* Give the animation video an explicit floor height so IntersectionObserver
+     can detect intersection even before metadata loads (avoids zero-height collapse) */
+  .dobra-2-card-visual video {
+    min-height: 120px !important;
+    width: 100% !important;
   }
 
   /* ── Dobra-4: edge-to-edge dashboard preview ── */
