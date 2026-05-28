@@ -6502,37 +6502,40 @@ body.site-nav-menu-open .site-nav-drawer {
   .ticker-item svg { width: 10px; height: 10px; flex-shrink: 0; }
   .ticker-item .lbl { font-size: 10px; }
 
-  /* ── Dobra-2: ? animation enquadrado no canto superior direito ──
-     Texto ocupa 58% da largura (max-width); o ? deve caber nos ~40% restantes
-     sem invadir a area do texto. Posicionado top-right como badge compacto. */
+  /* ── Dobra-2: ? animation enquadrado no canto INFERIOR direito ──
+     Texto ocupa largura completa (sem max-width); o ? fica como badge
+     decorativo no rodape do card, sobrepondo um pouco o texto laranja final. */
   .dobra-2-left-card {
     min-height: auto !important;
-    padding-bottom: 22px !important;
+    padding-bottom: 28px !important;
     overflow: hidden !important;
+    position: relative !important;
   }
-  /* Reduz a largura do texto para deixar mais espaço respiratorio do ? */
+  /* Texto livre — flui em toda largura do card */
   .dobra-2-card-content {
-    max-width: 60% !important;
+    max-width: 100% !important;
   }
-  /* ? badge compacto top-right — nao sobrepoe texto, sem espaço vazio */
+  /* ? badge compacto BOTTOM-RIGHT — canto inferior direito do card */
   .dobra-2-card-visual {
-    top: 16px !important;
-    bottom: auto !important;
-    right: 8px !important;
-    width: 36% !important;
-    max-width: 140px !important;
-    max-height: 170px !important;
+    top: auto !important;
+    bottom: 12px !important;
+    right: 10px !important;
+    left: auto !important;
+    width: 34% !important;
+    max-width: 130px !important;
+    max-height: 150px !important;
     overflow: hidden !important;
     opacity: 1 !important;
     transform: none !important;
     visibility: visible !important;
+    z-index: 5 !important;
   }
   .dobra-2-card-visual video {
     width: 100% !important;
     height: auto !important;
-    max-height: 170px !important;
+    max-height: 150px !important;
     object-fit: contain !important;
-    object-position: top center !important;
+    object-position: bottom center !important;
   }
 
   /* ── Dobra-4: edge-to-edge dashboard preview ── */
