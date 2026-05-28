@@ -6501,30 +6501,37 @@ body.site-nav-menu-open .site-nav-drawer {
   .ticker-item svg { width: 10px; height: 10px; flex-shrink: 0; }
   .ticker-item .lbl { font-size: 10px; }
 
-  /* ── Dobra-2: reposition ? animation so it appears ON the left card ──
-     Desktop: bottom:110px works because both columns are side by side.
-     Mobile: section stacks vertically — bottom:110px pushes the ? way below the
-     left card into the cards-list area, out of view. Fix: use top + right instead. */
-  .dobra-2-left-card { min-height: auto !important; }
-  /* Position ? animation top-right of the left card
-     Section has 44px top padding, so top:90px lands inside the card.
-     CRITICAL: data-sr="right" starts at opacity:0 + translateX(40px). Override BOTH
-     here so the element is always visible regardless of IntersectionObserver state. */
+  /* ── Dobra-2: ? animation enquadrado no canto superior direito ──
+     Texto ocupa 58% da largura (max-width); o ? deve caber nos ~40% restantes
+     sem invadir a area do texto. Posicionado top-right como badge compacto. */
+  .dobra-2-left-card {
+    min-height: auto !important;
+    padding-bottom: 22px !important;
+    overflow: hidden !important;
+  }
+  /* Reduz a largura do texto para deixar mais espaço respiratorio do ? */
+  .dobra-2-card-content {
+    max-width: 60% !important;
+  }
+  /* ? badge compacto top-right — nao sobrepoe texto, sem espaço vazio */
   .dobra-2-card-visual {
-    top: 90px !important;
+    top: 16px !important;
     bottom: auto !important;
-    right: 6px !important;
-    width: 48% !important;
-    max-width: 185px !important;
+    right: 8px !important;
+    width: 36% !important;
+    max-width: 140px !important;
+    max-height: 170px !important;
+    overflow: hidden !important;
     opacity: 1 !important;
     transform: none !important;
     visibility: visible !important;
   }
-  /* Give the animation video an explicit floor height so IntersectionObserver
-     can detect intersection even before metadata loads (avoids zero-height collapse) */
   .dobra-2-card-visual video {
-    min-height: 120px !important;
     width: 100% !important;
+    height: auto !important;
+    max-height: 170px !important;
+    object-fit: contain !important;
+    object-position: top center !important;
   }
 
   /* ── Dobra-4: edge-to-edge dashboard preview ── */
