@@ -6723,6 +6723,36 @@ body.site-nav-menu-open .site-nav-drawer {
     lazyVideos.forEach(function(v) { videoObs.observe(v); });
   }
 })();
+
+/* ── Mobile: reposiciona o ? de dobra-2 para dentro do .dobra-2-left-card ──
+   No desktop o elemento e filho direto do <section> (right:50%; bottom:110px).
+   No mobile (1-coluna), bottom:X relativo a secao coloca o ? abaixo dos bullets.
+   Solucao: mover o elemento para dentro do card, assim bottom fica relativo ao card. */
+(function() {
+  function reposition() {
+    var visual = document.querySelector('.dobra-2-card-visual');
+    var card   = document.querySelector('.dobra-2-left-card');
+    var inner  = document.querySelector('.dobra-2-inner');
+    if (!visual || !card || !inner) return;
+    var section = inner.parentElement;
+    var isMobile = window.innerWidth <= 767;
+    if (isMobile && visual.parentElement !== card) {
+      card.appendChild(visual);
+    } else if (!isMobile && visual.parentElement !== section) {
+      // Recoloca de volta como filho direto do section (apos .dobra-2-inner)
+      section.insertBefore(visual, inner.nextSibling);
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', reposition);
+  } else {
+    reposition();
+  }
+  var rt;
+  window.addEventListener('resize', function() {
+    clearTimeout(rt); rt = setTimeout(reposition, 180);
+  });
+})();
 </script>
 </head>
 <body data-vy-page-id="861d744b-ba55-494d-b1bf-42380354d9a4" data-vy-page-slug="principal" data-vy-track-endpoint="/public/api/track.php" style="scroll-behavior: auto;">
