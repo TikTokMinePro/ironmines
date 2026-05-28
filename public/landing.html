@@ -6214,41 +6214,66 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
      Fixes: nav overflow, performance, layout, touch targets
      ═══════════════════════════════════════════════════════════ -->
 <style>
-/* ── 1. CRITICAL: Fix orphaned global rule that forces nav links visible on all screens ──
-   The base .site-nav-links has display:none but a rogue rule above overrides it.
-   Re-hide nav links on mobile and remove the overflowing header CTA button. */
+/* ── 1. Mobile nav: [Logo] · · · [👤 icon] [☰ hamburger] ── */
 @media (max-width: 1024px) {
-  /* Hide nav links on mobile — hamburger drawer handles navigation */
-  .site-nav-links {
-    display: none !important;
-  }
-  /* Hide entire actions block (CTA + login) in the header on mobile.
-     The drawer already has both. Leaves a clean [Logo ←→ Hamburger] layout. */
+  /* Hide desktop nav links */
+  .site-nav-links { display: none !important; }
+
+  /* Hide CTA button in header — drawer already has it */
+  .site-nav-actions .container-botao { display: none !important; }
+
+  /* Keep actions div visible with just the login icon */
   .site-nav-actions {
-    display: none !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0 !important;
+    flex-shrink: 0 !important;
   }
-  /* Hamburger: make it clearly visible and premium-looking on mobile */
+
+  /* Login: icon only — hide "Fazer login" text */
+  .site-nav-actions .site-nav-login span { display: none !important; }
+  .site-nav-actions .site-nav-login {
+    padding: 8px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    justify-content: center !important;
+  }
+  .site-nav-actions .site-nav-login svg {
+    width: 22px !important;
+    height: 22px !important;
+    stroke-width: 1.6 !important;
+    color: rgba(190,190,192,0.85) !important;
+  }
+
+  /* Hamburger: unmistakably visible with green border */
   .site-nav-toggle {
     display: flex !important;
     background: rgba(0, 224, 0, 0.08) !important;
-    border: 1px solid rgba(0, 224, 0, 0.28) !important;
+    border: 1.5px solid rgba(0, 224, 0, 0.38) !important;
     border-radius: 10px !important;
-    box-shadow: 0 0 14px rgba(0, 224, 0, 0.15), inset 0 1px 0 rgba(255,255,255,0.05) !important;
+    box-shadow: 0 0 12px rgba(0, 224, 0, 0.16) !important;
     width: 44px !important;
     height: 44px !important;
+    padding: 10px !important;
   }
   .site-nav-toggle:active {
-    background: rgba(0, 224, 0, 0.16) !important;
-    transform: scale(0.95);
+    background: rgba(0, 224, 0, 0.18) !important;
+    transform: scale(0.94) !important;
   }
-  /* Slightly shorter logo on mobile to match the compact header */
-  .site-nav-logo img {
-    height: 36px !important;
+  /* Toggle bars: bright white */
+  .site-nav-toggle-bar {
+    background: #ffffff !important;
+    height: 2px !important;
   }
-  /* Make scrolled nav match the tighter mobile header */
-  .site-nav.is-scrolled {
-    background: rgba(6, 10, 6, 0.94) !important;
-  }
+
+  /* Logo: compact on mobile */
+  .site-nav-logo img { height: 34px !important; }
+
+  /* Nav bar: tighter horizontal padding */
+  .site-nav-bar { padding: 10px 14px !important; min-height: 58px !important; }
+
+  /* Scrolled state */
+  .site-nav.is-scrolled { background: rgba(6, 10, 6, 0.94) !important; }
 }
 
 /* ── 2. Fix nav drawer opacity (was 0.6 — looks translucent/broken) ── */
@@ -6384,29 +6409,34 @@ body.site-nav-menu-open .site-nav-drawer {
      so the card doesn't add unnecessary empty space. ── */
   .dobra-2-left-card { min-height: auto !important; }
 
-  /* ── Dobra-4: make dashboard preview fill mobile width ── */
+  /* ── Dobra-4: edge-to-edge dashboard preview ── */
   .dobra-4 {
     padding-left: 0 !important;
     padding-right: 0 !important;
     padding-top: 44px !important;
   }
-  .dobra-4-inner {
-    padding: 0 16px;
-  }
+  /* Inner: keep text padded but let the stage break out */
+  .dobra-4-inner { padding: 0 !important; }
+  .dobra-4-brand-icon,
+  .dobra-4-kicker,
+  .dobra-4-title,
+  .dobra-4-subtitle { padding-left: 16px !important; padding-right: 16px !important; }
   .dobra-4-title    { font-size: clamp(22px, 7vw, 30px) !important; }
   .dobra-4-subtitle { font-size: 15px !important; margin: 14px auto 20px !important; }
-  /* Stage: edge-to-edge, no side padding */
+  /* Stage: true 100 vw edge-to-edge */
   .dobra-4-stage {
     margin: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
+    padding: 0 !important;
   }
-  /* Outer frame: minimal padding, thinner border */
+  /* Outer frame: thin border, gentle curve */
   .dobra-4-video-outer {
     border-radius: 16px !important;
     padding: 1px !important;
+    overflow: hidden !important;
   }
-  /* Mid frame: reduce inner padding so video is larger */
+  /* Mid frame: reduced padding so video fills more */
   .dobra-4-video-mid {
     padding: 3px !important;
     border-radius: 14px !important;
@@ -6414,10 +6444,10 @@ body.site-nav-menu-open .site-nav-drawer {
   .dobra-4-video-media {
     border-radius: 10px !important;
   }
-  /* Mask: start fading later so more of the dashboard is visible */
+  /* Mask: fade out at 72% so most of the dashboard is visible */
   .dobra-4-video-outer {
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%) !important;
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%) !important;
+    -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%) !important;
+    mask-image: linear-gradient(to bottom, #000 72%, transparent 100%) !important;
   }
 
   /* ── Dobra-6 feature cards ── */
@@ -6513,42 +6543,54 @@ body.site-nav-menu-open .site-nav-drawer {
 </style>
 
 <script>
-/* ── Mobile performance: set videos to preload=none & pause off-screen ──
-   Prevents browser from downloading video data on mobile before user scrolls to it */
+/* ── Mobile performance: lazy-load off-screen videos ──
+   Hero video: preload=metadata (loads fast, autoplays).
+   Dobra-4 product video: preload=metadata, keeps autoplay (important showcase).
+   All other videos: preload=none, autoplay removed, play on scroll via IntersectionObserver. */
 (function() {
-  if (window.innerWidth > 900) return; // desktop: keep as-is
+  if (window.innerWidth > 900) return; // desktop: keep defaults
 
-  // Set all non-hero videos to preload=none
   var videos = document.querySelectorAll('video');
+  var lazyVideos = [];
+
   videos.forEach(function(v) {
-    var isHero = v.closest('#videoHero') || v.closest('.video-hero');
-    if (!isHero) {
+    var isHero   = v.closest('#videoHero') || v.closest('.video-hero');
+    var isDobra4 = v.id === 'dobra4ConhecaVideo';
+
+    if (isHero) {
+      // Hero: keep autoplay, just reduce preload bandwidth
+      v.setAttribute('preload', 'metadata');
+    } else if (isDobra4) {
+      // Product showcase: keep autoplay, light preload
+      v.setAttribute('preload', 'metadata');
+      // Collect for IntersectionObserver so it pauses when off-screen
+      lazyVideos.push(v);
+    } else {
+      // All other background/decorative videos: don't load until in viewport
       v.setAttribute('preload', 'none');
       v.removeAttribute('autoplay');
       v.pause();
-    } else {
-      // Hero video: keep autoplay but reduce preload
-      v.setAttribute('preload', 'metadata');
+      lazyVideos.push(v);
     }
   });
 
-  // Lazy-start videos via IntersectionObserver when they enter viewport
-  if ('IntersectionObserver' in window) {
+  // IntersectionObserver: play when entering viewport, pause when leaving
+  if ('IntersectionObserver' in window && lazyVideos.length) {
     var videoObs = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         var v = entry.target;
         if (entry.isIntersecting) {
-          v.setAttribute('preload', 'auto');
+          if (v.getAttribute('preload') === 'none') {
+            v.setAttribute('preload', 'auto');
+          }
           v.play().catch(function(){});
         } else {
           v.pause();
         }
       });
-    }, { rootMargin: '100px' });
+    }, { rootMargin: '80px' });
 
-    document.querySelectorAll('video:not(.video-hero video)').forEach(function(v) {
-      videoObs.observe(v);
-    });
+    lazyVideos.forEach(function(v) { videoObs.observe(v); });
   }
 })();
 </script>
