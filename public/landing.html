@@ -604,10 +604,15 @@
             cursor: pointer;
             border-radius: 10px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            mask: linear-gradient(to bottom, #000 0%, #000 40%, transparent 80%);
             z-index: 3;
             margin-top: 100px;
-            
+        }
+
+        /* Mask só no desktop — em mobile o vídeo fica inteiro visível */
+        @media only screen and (min-width: 768px) {
+            .video-hero {
+                mask: linear-gradient(to bottom, #000 0%, #000 40%, transparent 80%);
+            }
         }
 
         .video-hero-bg {
@@ -618,10 +623,16 @@
             height: 100%;
             object-fit: cover;
             z-index: 2;
-            mask: linear-gradient(to bottom, #000 0%, #000 40%, transparent 80%);
             padding-bottom: 4px;
             opacity: 0.8;
             pointer-events: none;
+        }
+
+        /* Mask só no desktop — em mobile o vídeo fica inteiro visível */
+        @media only screen and (min-width: 768px) {
+            .video-hero-bg {
+                mask: linear-gradient(to bottom, #000 0%, #000 40%, transparent 80%);
+            }
         }
 
         .video-hero-overlay {
@@ -1035,14 +1046,15 @@
             font-weight: 600;
         }
 
-        /* Hero Title */
+        /* Hero Title — base sem negative pull. O efeito de sobreposição com o vídeo
+           só acontece no desktop grande (>=1442px) via media query abaixo. */
         .hero-title {
             font-size: 42px;
             font-weight: 500;
             line-height: 1.2em;
             letter-spacing: -2px;
             text-align: center;
-            margin: -200px auto 40px;
+            margin: 40px auto;
             padding-top: 10px;
             font-family: "Geist", sans-serif;
             box-decoration-break: clone;
@@ -1083,6 +1095,10 @@
         @media only screen and (min-width: 1442px){
         .video-hero{
             margin-top: 150px;
+        }
+        /* Desktop grande: título sobrepoe o final do vídeo (mask cria transparência) */
+        .hero-title {
+            margin: -200px auto 40px;
         }
         }
 
@@ -1348,9 +1364,14 @@
             z-index: 20;
             pointer-events: none;
             overflow: visible;
-            /* Mascara o topo gradualmente para ocultar o corte do frame do vídeo */
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 22%, black 100%);
-            mask-image: linear-gradient(to bottom, transparent 0%, black 22%, black 100%);
+        }
+
+        /* Mask só no desktop (>=768px) — em mobile esconde o ?, então removemos */
+        @media only screen and (min-width: 768px) {
+            .dobra-2-card-visual {
+                -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 22%, black 100%);
+                mask-image: linear-gradient(to bottom, transparent 0%, black 22%, black 100%);
+            }
         }
 
         .dobra-2-card-visual video {
@@ -6856,7 +6877,7 @@ body.site-nav-menu-open .site-nav-drawer {
 </li>
 </ul>
 </div>
-<div aria-hidden="true" class="dobra-2-card-visual" data-sr="right" data-sr-delay="100">
+<div aria-hidden="true" class="dobra-2-card-visual">
 <video autoplay="" loop="" muted="" playsinline="" preload="auto">
 <source src="/assets/ANIMACAO.webm" type="video/webm"/>
 </video>
