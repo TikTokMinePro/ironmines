@@ -6238,7 +6238,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
      Fixes: nav overflow, performance, layout, touch targets
      ═══════════════════════════════════════════════════════════ -->
 <style>
-/* ── 1. Mobile nav: [Logo] · · · [👤 icon] [☰ hamburger] ── */
+/* ── 1. Mobile nav: [Logo] ......... [👤 icon][☰ hamburger] ── */
 @media (max-width: 1024px) {
   /* Hide desktop nav links */
   .site-nav-links { display: none !important; }
@@ -6246,12 +6246,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   /* Hide CTA button in header — drawer already has it */
   .site-nav-actions .container-botao { display: none !important; }
 
-  /* Keep actions div visible with just the login icon */
+  /* Push login icon group all the way to the right, next to hamburger.
+     margin-left:auto overrides the space-between distribution of .site-nav-bar */
   .site-nav-actions {
     display: flex !important;
     align-items: center !important;
     gap: 0 !important;
     flex-shrink: 0 !important;
+    margin-left: auto !important;
+    margin-right: 6px !important;
   }
 
   /* Login: icon only — hide "Fazer login" text */
@@ -6433,22 +6436,22 @@ body.site-nav-menu-open .site-nav-drawer {
   /* ── Hero video ──
      • display:block + margin:auto — centers in block layout
      • explicit height (52vw ≈ 16:9 at 92% width) — avoids iOS Safari flex+aspect-ratio bug
-     • mask:none — removes the bottom-fade gradient that hides most of the video */
+     • mask gradient suave — fade bottom 25% para o texto sobrepor com transparência (mesmo efeito do desktop) */
   .video-hero {
     display: block !important;
     width: 92% !important;
-    height: 52vw !important;
-    min-height: 190px !important;
+    height: 56vw !important;
+    min-height: 210px !important;
     max-height: none !important;
     margin: 0 auto !important;
-    /* Override ALL mask variants — shorthand + sub-property + webkit */
-    mask: none !important;
-    -webkit-mask: none !important;
-    mask-image: none !important;
-    -webkit-mask-image: none !important;
+    /* Mask suave: solido até 70%, fade para transparente em 100% (overlay textual) */
+    mask: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%) !important;
+    -webkit-mask: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%) !important;
     border-radius: 14px !important;
     z-index: 3 !important;
   }
+  /* Esconder pill "● Produtos Virais / Criadores Virais" no mobile — sobrepoe o texto */
+  .im-hbg-label { display: none !important; }
   /* Play button centered and in front */
   .video-hero-content {
     top: 50% !important;
@@ -6457,12 +6460,14 @@ body.site-nav-menu-open .site-nav-drawer {
   }
   .video-hero-play-btn { z-index: 10 !important; }
 
-  /* ── Hero title: sits BELOW the video, never overlaps ── */
+  /* ── Hero title: sobrepoe os ultimos 60px do video (mesma estetica do desktop)
+     O mask gradient do .video-hero faz o bottom virar transparente — o titulo
+     "encosta" no video sem corte visual. Negative margin-top puxa pra cima. ── */
   .hero-title {
     display: block !important;
-    margin: 22px auto 16px !important;
+    margin: -60px auto 16px !important;
     padding: 0 16px !important;
-    z-index: 2 !important;
+    z-index: 4 !important;
     position: relative !important;
     font-size: 24px !important;
     line-height: 1.28 !important;
