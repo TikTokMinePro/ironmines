@@ -6208,6 +6208,263 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 /* Desativa d6FeatIn CSS — IntersectionObserver controla entrada */
 .d6-canvas{animation:none !important;}
 </style>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MOBILE OPTIMIZATION — IronMines Landing
+     Fixes: nav overflow, performance, layout, touch targets
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+/* ── 1. CRITICAL: Fix orphaned global rule that forces nav links visible on all screens ──
+   The base .site-nav-links has display:none but a rogue rule above overrides it.
+   Re-hide nav links on mobile and remove the overflowing header CTA button. */
+@media (max-width: 1024px) {
+  .site-nav-links {
+    display: none !important;
+  }
+  /* CTA button in nav header hidden on mobile — drawer has its own */
+  .site-nav-actions .container-botao {
+    display: none !important;
+  }
+  /* Ensure actions row doesn't overflow */
+  .site-nav-actions {
+    gap: 10px !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+/* ── 2. Fix nav drawer opacity (was 0.6 — looks translucent/broken) ── */
+body.site-nav-menu-open .site-nav-drawer {
+  opacity: 1 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MOBILE (≤ 767px) — Layout, spacing, readability
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+
+  /* ── Global ── */
+  html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  /* ── PERFORMANCE: Disable heavy decorative GPU-intensive elements ──
+     These contribute most to slow rendering & janky scroll on mobile */
+  .bg-aurora,
+  .bg-scanline,
+  .bg-noise,
+  .bg-particles,
+  .bg-orb.o2,
+  .bg-orb.o3 {
+    display: none !important;
+  }
+  .bg-orb.o1 {
+    animation: none !important;
+    opacity: 0.1;
+    filter: blur(50px);
+    width: 200px !important;
+    height: 200px !important;
+  }
+  .particle { display: none !important; }
+  .d13-p   { display: none !important; }
+
+  /* Slow down remaining spinning animations so they don't hammer GPU */
+  .d14-ring-svg            { animation-duration: 50s !important; }
+  .d14-pulse-ring,
+  .d14-scan                { display: none !important; }
+  .d4BarRotate,
+  .dobra-4-video-outer::before { animation: none !important; }
+  @keyframes d4BarRotate   { from{} to{} } /* neutralise */
+
+  /* ── Nav drawer: full-width CTA button on mobile ── */
+  .site-nav-drawer-cta {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    padding-top: 16px !important;
+    justify-items: center !important;
+  }
+  .site-nav-drawer-cta .container-botao,
+  .site-nav-drawer-cta .botao {
+    width: 100% !important;
+  }
+  .site-nav-drawer-cta .botao .btn-cta {
+    width: 100% !important;
+    font-size: 16px !important;
+    padding: 14px 20px !important;
+    text-align: center !important;
+  }
+  .site-nav-toggle {
+    -webkit-tap-highlight-color: transparent;
+  }
+  .site-nav-drawer-links a {
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* ── Hero ── */
+  .video-hero {
+    width: 92% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 10;
+    min-height: 180px;
+    max-height: 54vw;
+    border-radius: 12px !important;
+  }
+  .video-hero-content {
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+  .ticker-item {
+    font-size: 11px !important;
+    padding: 0 10px;
+    gap: 4px;
+  }
+  .ticker-item svg { width: 10px; height: 10px; flex-shrink: 0; }
+  .ticker-item .lbl { font-size: 10px; }
+
+  /* ── Dobra-2: hide side video, show text full-width ── */
+  .dobra-2-card-visual   { display: none !important; }
+  .dobra-2-card-content  { max-width: 100% !important; }
+  .dobra-2-left-card     { min-height: auto !important; }
+
+  /* ── Dobra-4 ── */
+  .dobra-4-title    { font-size: clamp(22px, 7vw, 30px) !important; }
+  .dobra-4-subtitle { font-size: 15px !important; margin: 14px auto 22px !important; }
+
+  /* ── Dobra-6 feature cards ── */
+  .dobra-6  { padding: 52px 12px 60px !important; }
+  .d6-feat  { min-height: unset !important; }
+  .d6-feat-gif {
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  /* ── Dobra-13 Pricing: 1-col on all mobile ── */
+  .dobra-13          { padding: 56px 14px 64px !important; }
+  .dobra-13-title    { font-size: clamp(20px, 6vw, 26px) !important; letter-spacing: -0.3px; }
+  .d13-plans {
+    grid-template-columns: 1fr !important;
+    max-width: 400px !important;
+    margin-inline: auto !important;
+    gap: 18px !important;
+  }
+  .d13-card--mensal  { grid-column: auto !important; }
+  .d13-card--featured { order: -1 !important; }
+  .d13-trust {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 14px;
+  }
+  .d13-trust-sep   { width: 40px; height: 1px; }
+  .d13-trust-item  { padding: 4px 0; }
+  .d13-microcopy   { font-size: 13px; padding: 0 8px; }
+
+  /* ── Dobra-14 Guarantee ── */
+  .d14-title   { font-size: 26px !important; }
+  .d14-desc    { font-size: 14px; line-height: 1.55; }
+  .d14-closing { font-size: 14px; }
+
+  /* ── FAQ ── */
+  .dobra-faq-inner { grid-template-columns: 1fr !important; }
+  .faq-side {
+    position: static !important;
+    margin-top: 0 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .faq-side-title {
+    text-align: center !important;
+    font-size: 24px !important;
+    max-width: 100% !important;
+  }
+  .faq-question {
+    min-height: 50px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* ── Footer ── */
+  .site-footer          { padding: 36px 18px 24px !important; }
+  .site-footer-grid     { grid-template-columns: 1fr !important; gap: 20px !important; }
+  .site-footer-bottom {
+    flex-direction: column !important;
+    gap: 10px !important;
+    text-align: center !important;
+    align-items: center !important;
+  }
+  .site-footer-social { justify-content: center !important; }
+
+  /* ── Global touch quality ── */
+  .btn-cta, .faq-question, .faq-side-btn, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button, a, [role="button"] {
+    touch-action: manipulation;
+  }
+
+  /* ── Prevent orb bleed causing horizontal scroll ── */
+  .bg-orbs { overflow: hidden; }
+  section  { overflow-x: hidden; }
+}
+
+/* ── Respect user's reduced-motion preference ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+
+<script>
+/* ── Mobile performance: set videos to preload=none & pause off-screen ──
+   Prevents browser from downloading video data on mobile before user scrolls to it */
+(function() {
+  if (window.innerWidth > 900) return; // desktop: keep as-is
+
+  // Set all non-hero videos to preload=none
+  var videos = document.querySelectorAll('video');
+  videos.forEach(function(v) {
+    var isHero = v.closest('#videoHero') || v.closest('.video-hero');
+    if (!isHero) {
+      v.setAttribute('preload', 'none');
+      v.removeAttribute('autoplay');
+      v.pause();
+    } else {
+      // Hero video: keep autoplay but reduce preload
+      v.setAttribute('preload', 'metadata');
+    }
+  });
+
+  // Lazy-start videos via IntersectionObserver when they enter viewport
+  if ('IntersectionObserver' in window) {
+    var videoObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        var v = entry.target;
+        if (entry.isIntersecting) {
+          v.setAttribute('preload', 'auto');
+          v.play().catch(function(){});
+        } else {
+          v.pause();
+        }
+      });
+    }, { rootMargin: '100px' });
+
+    document.querySelectorAll('video:not(.video-hero video)').forEach(function(v) {
+      videoObs.observe(v);
+    });
+  }
+})();
+</script>
 </head>
 <body data-vy-page-id="861d744b-ba55-494d-b1bf-42380354d9a4" data-vy-page-slug="principal" data-vy-track-endpoint="/public/api/track.php" style="scroll-behavior: auto;">
 <!-- Google Tag Manager (noscript) -->
