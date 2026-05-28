@@ -6495,45 +6495,53 @@ body.site-nav-menu-open .site-nav-drawer {
     display: none !important;
   }
 
-  /* ── Dobra-4: edge-to-edge dashboard preview ── */
+  /* ── Dobra-4: dashboard preview MAIOR — true edge-to-edge + scale up ── */
   .dobra-4 {
     padding-left: 0 !important;
     padding-right: 0 !important;
     padding-top: 44px !important;
+    padding-bottom: 40px !important;
+    overflow: hidden !important;
   }
   /* Inner: keep text padded but let the stage break out */
-  .dobra-4-inner { padding: 0 !important; }
+  .dobra-4-inner { padding: 0 !important; max-width: 100% !important; }
   .dobra-4-brand-icon,
   .dobra-4-kicker,
   .dobra-4-title,
   .dobra-4-subtitle { padding-left: 16px !important; padding-right: 16px !important; }
   .dobra-4-title    { font-size: clamp(22px, 7vw, 30px) !important; }
   .dobra-4-subtitle { font-size: 15px !important; margin: 14px auto 20px !important; }
-  /* Stage: true 100 vw edge-to-edge */
+  /* Stage: extrapola viewport para o tablet ficar maior (scale visual ~118%) */
   .dobra-4-stage {
-    margin: 0 !important;
-    width: 100% !important;
-    max-width: 100% !important;
+    margin: 0 auto !important;
+    width: 118% !important;
+    max-width: 118% !important;
+    margin-left: -9% !important;
     padding: 0 !important;
   }
-  /* Outer frame: thin border, gentle curve */
+  /* Outer frame: borda fina, raio suave */
   .dobra-4-video-outer {
-    border-radius: 16px !important;
+    border-radius: 18px !important;
     padding: 1px !important;
     overflow: hidden !important;
+    /* Mask SEM fade — mostra o tablet inteiro */
+    mask: none !important;
+    -webkit-mask: none !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
   }
-  /* Mid frame: reduced padding so video fills more */
+  /* Mid frame: padding minimo para video preencher mais */
   .dobra-4-video-mid {
-    padding: 3px !important;
-    border-radius: 14px !important;
+    padding: 2px !important;
+    border-radius: 16px !important;
   }
   .dobra-4-video-media {
-    border-radius: 10px !important;
+    border-radius: 12px !important;
   }
-  /* Mask: fade out at 72% so most of the dashboard is visible */
-  .dobra-4-video-outer {
-    -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%) !important;
-    mask-image: linear-gradient(to bottom, #000 72%, transparent 100%) !important;
+  .dobra-4-video-media video {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
   }
 
   /* ── Dobra-6 feature cards ── */
