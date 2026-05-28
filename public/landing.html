@@ -6337,35 +6337,13 @@ body.site-nav-menu-open .site-nav-drawer {
     overflow-x: hidden;
   }
 
-  /* ── PERFORMANCE: Kill every GPU-heavy decorative layer ── */
-  .bg-aurora,
-  .bg-scanline,
-  .bg-noise,
+  /* ── PERFORMANCE: apenas elementos mais pesados desativados ──
+     Restaurados todos os fundos decorativos (aurora, grid, orbs, rays, im-aurora,
+     im-mesh, im-hbg-fx, scanline, noise) para paridade visual com desktop.
+     Mantemos desativados APENAS os particles (30+ DOM nodes animados) que
+     causam jank significativo em mobile sem agregar muito visualmente. */
   .bg-particles,
-  .bg-orb.o2,
-  .bg-orb.o3,
-  .bg-rays,
-  .bg-grid,
-  .im-aurora,
-  .im-mesh,
-  .im-hbg-fx {
-    display: none !important;
-  }
-  /* One simple static glow instead of animated orb */
-  .bg-orb.o1 {
-    animation: none !important;
-    opacity: 0.08 !important;
-    filter: blur(60px) !important;
-    width: 180px !important;
-    height: 180px !important;
-  }
-  /* Kill all particle/ring animations */
-  .particle, .d13-p, .d14-pulse-ring, .d14-scan { display: none !important; }
-  .d14-ring-svg { animation-duration: 60s !important; }
-  .dobra-4-video-outer::before { animation: none !important; }
-  @keyframes d4BarRotate { from{} to{} }
-  /* Stop CTA shine loop — saves one compositor layer */
-  .hero-cta .botao .btn-cta::before { animation: none !important; opacity: 0 !important; }
+  .particle { display: none !important; }
   /* Disable will-change across the board — prevents memory pressure */
   [data-sr] { will-change: auto !important; }
 
