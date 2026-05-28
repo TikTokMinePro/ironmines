@@ -6256,6 +6256,16 @@ body.site-nav-menu-open .site-nav-drawer {
   opacity: 1 !important;
 }
 
+/* ── 3. Disable ProgressiveBlur overlay on mobile ──
+   position:fixed + backdrop-filter on iOS Safari causes the blur layers
+   to "float up" during momentum scroll instead of staying pinned at bottom.
+   The effect adds no UX value on mobile — remove it entirely. */
+@media (max-width: 900px) {
+  #pgBlur {
+    display: none !important;
+  }
+}
+
 /* ══════════════════════════════════════════════════════════════
    MOBILE (≤ 767px) — Layout, spacing, readability
    ══════════════════════════════════════════════════════════════ */
@@ -8417,10 +8427,12 @@ E se eu não gostar?
       { autoAlpha: 0, y: 28 },
       { autoAlpha: 1, y: 0,  duration: 0.65 }, 0.88);
 
-    /* Float contínuo do logo — não mexe em transform do elemento root */
-    gsap.to('.site-nav-logo img', {
-      y: 5, duration: 2.8, ease: 'sine.inOut', repeat: -1, yoyo: true
-    });
+    /* Float contínuo do logo — só no desktop */
+    if (window.innerWidth > 900) {
+      gsap.to('.site-nav-logo img', {
+        y: 5, duration: 2.8, ease: 'sine.inOut', repeat: -1, yoyo: true
+      });
+    }
   })();
 
 
@@ -8429,18 +8441,21 @@ E se eu não gostar?
      As seções têm overflow:hidden — limitar deslocamento
      evita scrollbar horizontal em qualquer viewport
   ══════════════════════════════════════════════════ */
-  document.querySelectorAll('.bg-orb').forEach(function (orb, i) {
-    gsap.to(orb, {
-      y: (i % 2 === 0 ? -1 : 1) * 55,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: document.body,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 2.5
-      }
+  /* Parallax orbs — desktop only; scrub causes jank on mobile */
+  if (window.innerWidth > 900) {
+    document.querySelectorAll('.bg-orb').forEach(function (orb, i) {
+      gsap.to(orb, {
+        y: (i % 2 === 0 ? -1 : 1) * 55,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 2.5
+        }
+      });
     });
-  });
+  }
 
 
   /* ══════════════════════════════════════════════════
@@ -8508,7 +8523,7 @@ E se eu não gostar?
 </script>
 
 <!-- ProgressiveBlur: blur gradual fixo no rodapé (8 camadas, inline styles) -->
-<div aria-hidden="true" style="position:fixed;bottom:0;left:0;width:100%;height:200px;z-index:999;pointer-events:none;">
+<div id="pgBlur" aria-hidden="true" style="position:fixed;bottom:0;left:0;width:100%;height:200px;z-index:999;pointer-events:none;">
   <div style="position:absolute;inset:0;backdrop-filter:blur(0.25px);-webkit-backdrop-filter:blur(0.25px);mask-image:linear-gradient(to bottom,transparent 0%,black 12.5%,black 25%,transparent 37.5%);-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 12.5%,black 25%,transparent 37.5%);"></div>
   <div style="position:absolute;inset:0;backdrop-filter:blur(0.5px);-webkit-backdrop-filter:blur(0.5px);mask-image:linear-gradient(to bottom,transparent 12.5%,black 25%,black 37.5%,transparent 50%);-webkit-mask-image:linear-gradient(to bottom,transparent 12.5%,black 25%,black 37.5%,transparent 50%);"></div>
   <div style="position:absolute;inset:0;backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px);mask-image:linear-gradient(to bottom,transparent 25%,black 37.5%,black 50%,transparent 62.5%);-webkit-mask-image:linear-gradient(to bottom,transparent 25%,black 37.5%,black 50%,transparent 62.5%);"></div>
