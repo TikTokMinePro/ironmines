@@ -6054,8 +6054,11 @@
                 border-radius: 10px !important;
                 width: 100% !important;
             }
+        }
+        /* Negative pull-up only on tablets (768-899px) where video+text overlap is intentional */
+        @media (min-width: 768px) and (max-width: 899px) {
             .hero-title {
-                margin-top: -120px !important; /* Pull up over the gradient fade on mobile */
+                margin-top: -120px !important;
                 margin-bottom: 20px !important;
             }
         }
@@ -6387,22 +6390,32 @@ body.site-nav-menu-open .site-nav-drawer {
     min-height: 44px !important;
   }
 
-  /* ── Hero ── */
-  /* Full-width video, no mask — show the complete dashboard preview */
+  /* ── Dobra-1: stack from top, not centered — predictable on all iOS sizes ── */
+  .dobra-1 {
+    justify-content: flex-start !important;
+    padding-top: calc(var(--site-nav-h, 58px) + 20px) !important;
+    padding-bottom: 40px !important;
+  }
+
+  /* ── Hero video ──
+     • explicit height (52vw ≈ 16:9 at 92% width) — avoids iOS Safari flex+aspect-ratio bug
+     • mask:none — removes the bottom-fade gradient that hides most of the video
+     • margin-top:0 — section padding already handles the nav offset */
   .video-hero {
     width: 92% !important;
-    height: auto !important;
-    aspect-ratio: 16 / 9 !important;
-    min-height: 200px !important;
-    max-height: none !important;          /* remove the 54vw cap that was shrinking it */
-    margin-top: calc(var(--site-nav-h, 58px) + 10px) !important;
-    /* Remove the bottom-fade mask — on mobile we want the full video visible */
+    height: 52vw !important;
+    min-height: 190px !important;
+    max-height: none !important;
+    margin-top: 0 !important;
+    /* Override ALL mask variants — shorthand + sub-property + webkit */
+    mask: none !important;
+    -webkit-mask: none !important;
     mask-image: none !important;
     -webkit-mask-image: none !important;
     border-radius: 14px !important;
     z-index: 3 !important;
   }
-  /* Play button: always above title */
+  /* Play button centered and in front */
   .video-hero-content {
     top: 50% !important;
     transform: translateY(-50%) !important;
@@ -6410,19 +6423,22 @@ body.site-nav-menu-open .site-nav-drawer {
   }
   .video-hero-play-btn { z-index: 10 !important; }
 
-  /* ── Hero title: override the -120px negative margin (from @media max-width:899px) ── */
-  /* That rule pulls the title OVER the video — fix it to stack below */
+  /* ── Hero title: stack BELOW the video ── */
   .hero-title {
     margin-top: 20px !important;
     margin-bottom: 16px !important;
-    z-index: 2 !important;               /* below video (z-index:3) — no overlap */
+    z-index: 2 !important;
+    font-size: 24px !important;
+    line-height: 1.28 !important;
   }
-  /* CTA: stays above title in z-order, full width */
+
+  /* ── CTA: full-width below title ── */
   .hero-cta {
     position: relative !important;
     z-index: 5 !important;
     width: 90% !important;
     max-width: 360px !important;
+    margin-top: 4px !important;
   }
   .hero-cta .container-botao,
   .hero-cta .botao { width: 100% !important; }
