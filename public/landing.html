@@ -6189,7 +6189,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             overflow: visible !important;
             height: auto !important;
         }
-        </style>    <script src="https://cdn.tailwindcss.com"></script>
+        </style>    <script defer src="https://cdn.tailwindcss.com"></script>
 <style>
 /* --- ScrollReveal: estado inicial oculto --- */
 /* Todos os elementos com [data-sr] comeam ocultos */
@@ -6302,33 +6302,37 @@ body.site-nav-menu-open .site-nav-drawer {
     overflow-x: hidden;
   }
 
-  /* ── PERFORMANCE: Disable heavy decorative GPU-intensive elements ──
-     These contribute most to slow rendering & janky scroll on mobile */
+  /* ── PERFORMANCE: Kill every GPU-heavy decorative layer ── */
   .bg-aurora,
   .bg-scanline,
   .bg-noise,
   .bg-particles,
   .bg-orb.o2,
-  .bg-orb.o3 {
+  .bg-orb.o3,
+  .bg-rays,
+  .bg-grid,
+  .im-aurora,
+  .im-mesh,
+  .im-hbg-fx {
     display: none !important;
   }
+  /* One simple static glow instead of animated orb */
   .bg-orb.o1 {
     animation: none !important;
-    opacity: 0.1;
-    filter: blur(50px);
-    width: 200px !important;
-    height: 200px !important;
+    opacity: 0.08 !important;
+    filter: blur(60px) !important;
+    width: 180px !important;
+    height: 180px !important;
   }
-  .particle { display: none !important; }
-  .d13-p   { display: none !important; }
-
-  /* Slow down remaining spinning animations so they don't hammer GPU */
-  .d14-ring-svg            { animation-duration: 50s !important; }
-  .d14-pulse-ring,
-  .d14-scan                { display: none !important; }
-  .d4BarRotate,
+  /* Kill all particle/ring animations */
+  .particle, .d13-p, .d14-pulse-ring, .d14-scan { display: none !important; }
+  .d14-ring-svg { animation-duration: 60s !important; }
   .dobra-4-video-outer::before { animation: none !important; }
-  @keyframes d4BarRotate   { from{} to{} } /* neutralise */
+  @keyframes d4BarRotate { from{} to{} }
+  /* Stop CTA shine loop — saves one compositor layer */
+  .hero-cta .botao .btn-cta::before { animation: none !important; opacity: 0 !important; }
+  /* Disable will-change across the board — prevents memory pressure */
+  [data-sr] { will-change: auto !important; }
 
   /* ── Nav bar: compact and balanced on mobile ── */
   .site-nav-bar {
@@ -6384,18 +6388,51 @@ body.site-nav-menu-open .site-nav-drawer {
   }
 
   /* ── Hero ── */
+  /* Full-width video, no mask — show the complete dashboard preview */
   .video-hero {
     width: 92% !important;
     height: auto !important;
-    aspect-ratio: 16 / 10;
-    min-height: 180px;
-    max-height: 54vw;
-    border-radius: 12px !important;
+    aspect-ratio: 16 / 9 !important;
+    min-height: 200px !important;
+    max-height: none !important;          /* remove the 54vw cap that was shrinking it */
+    margin-top: calc(var(--site-nav-h, 58px) + 10px) !important;
+    /* Remove the bottom-fade mask — on mobile we want the full video visible */
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+    border-radius: 14px !important;
+    z-index: 3 !important;
   }
+  /* Play button: always above title */
   .video-hero-content {
     top: 50% !important;
     transform: translateY(-50%) !important;
+    z-index: 10 !important;
   }
+  .video-hero-play-btn { z-index: 10 !important; }
+
+  /* ── Hero title: override the -120px negative margin (from @media max-width:899px) ── */
+  /* That rule pulls the title OVER the video — fix it to stack below */
+  .hero-title {
+    margin-top: 20px !important;
+    margin-bottom: 16px !important;
+    z-index: 2 !important;               /* below video (z-index:3) — no overlap */
+  }
+  /* CTA: stays above title in z-order, full width */
+  .hero-cta {
+    position: relative !important;
+    z-index: 5 !important;
+    width: 90% !important;
+    max-width: 360px !important;
+  }
+  .hero-cta .container-botao,
+  .hero-cta .botao { width: 100% !important; }
+  .hero-cta .btn-cta {
+    width: 100% !important;
+    padding: 14px 12px !important;
+    font-size: 17px !important;
+    border-radius: 10px !important;
+  }
+
   .ticker-item {
     font-size: 11px !important;
     padding: 0 10px;
@@ -6404,10 +6441,20 @@ body.site-nav-menu-open .site-nav-drawer {
   .ticker-item svg { width: 10px; height: 10px; flex-shrink: 0; }
   .ticker-item .lbl { font-size: 10px; }
 
-  /* ── Dobra-2: keep the ? animation visible (original mobile CSS already handles
-     the 58%/44% split — left text / right visual). Just ensure min-height is auto
-     so the card doesn't add unnecessary empty space. ── */
+  /* ── Dobra-2: reposition ? animation so it appears ON the left card ──
+     Desktop: bottom:110px works because both columns are side by side.
+     Mobile: section stacks vertically — bottom:110px pushes the ? way below the
+     left card into the cards-list area, out of view. Fix: use top + right instead. */
   .dobra-2-left-card { min-height: auto !important; }
+  /* Position ? animation top-right of the left card
+     Section has 44px top padding, so top:90px lands inside the card */
+  .dobra-2-card-visual {
+    top: 90px !important;
+    bottom: auto !important;
+    right: 6px !important;
+    width: 48% !important;
+    max-width: 185px !important;
+  }
 
   /* ── Dobra-4: edge-to-edge dashboard preview ── */
   .dobra-4 {
@@ -6556,17 +6603,18 @@ body.site-nav-menu-open .site-nav-drawer {
   videos.forEach(function(v) {
     var isHero   = v.closest('#videoHero') || v.closest('.video-hero');
     var isDobra4 = v.id === 'dobra4ConhecaVideo';
+    // ? animation (ANIMACAO.webm) — small file, must autoplay to be visible
+    var isAnim   = v.closest('.dobra-2-card-visual') !== null;
 
     if (isHero) {
-      // Hero: keep autoplay, just reduce preload bandwidth
+      // Hero: keep autoplay, reduce preload bandwidth
       v.setAttribute('preload', 'metadata');
-    } else if (isDobra4) {
-      // Product showcase: keep autoplay, light preload
+    } else if (isDobra4 || isAnim) {
+      // Product showcase + ? animation: keep autoplay, light preload
       v.setAttribute('preload', 'metadata');
-      // Collect for IntersectionObserver so it pauses when off-screen
-      lazyVideos.push(v);
+      lazyVideos.push(v); // still pause when off-screen to save battery
     } else {
-      // All other background/decorative videos: don't load until in viewport
+      // All other decorative/background videos: load on demand
       v.setAttribute('preload', 'none');
       v.removeAttribute('autoplay');
       v.pause();
