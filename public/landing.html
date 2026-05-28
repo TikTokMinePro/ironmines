@@ -6248,32 +6248,40 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     color: rgba(190,190,192,0.85) !important;
   }
 
-  /* Hamburger: unmistakably visible with green border */
+  /* ── Hambúrguer: 3 barras brancas, fundo transparente, borda sutil ── */
   .site-nav-toggle {
     display: flex !important;
-    background: rgba(0, 224, 0, 0.08) !important;
-    border: 1.5px solid rgba(0, 224, 0, 0.38) !important;
-    border-radius: 10px !important;
-    box-shadow: 0 0 12px rgba(0, 224, 0, 0.16) !important;
-    width: 44px !important;
-    height: 44px !important;
-    padding: 10px !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 5px !important;
+    width: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
   }
   .site-nav-toggle:active {
-    background: rgba(0, 224, 0, 0.18) !important;
+    background: rgba(255, 255, 255, 0.07) !important;
     transform: scale(0.94) !important;
   }
-  /* Toggle bars: bright white */
+  /* Barras: largura fixa e bem visíveis */
   .site-nav-toggle-bar {
-    background: #ffffff !important;
+    display: block !important;
+    width: 20px !important;
     height: 2px !important;
+    background: rgba(255, 255, 255, 0.88) !important;
+    border-radius: 2px !important;
+    flex-shrink: 0 !important;
   }
 
   /* Logo: compact on mobile */
   .site-nav-logo img { height: 34px !important; }
 
-  /* Nav bar: tighter horizontal padding */
-  .site-nav-bar { padding: 10px 14px !important; min-height: 58px !important; }
+  /* Nav bar */
+  .site-nav-bar { padding: 10px 16px !important; min-height: 58px !important; }
 
   /* Scrolled state */
   .site-nav.is-scrolled { background: rgba(6, 10, 6, 0.94) !important; }
