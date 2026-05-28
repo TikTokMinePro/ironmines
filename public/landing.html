@@ -6316,12 +6316,21 @@ body.site-nav-menu-open .site-nav-drawer {
   opacity: 1 !important;
 }
 
-/* ── 3. Disable ProgressiveBlur overlay on mobile ──
-   position:fixed + backdrop-filter on iOS Safari causes the blur layers
-   to "float up" during momentum scroll instead of staying pinned at bottom.
-   The effect adds no UX value on mobile — remove it entirely. */
+/* ── 3. ProgressiveBlur: ativo em PC e mobile ──
+   Ajustes em mobile para mitigar o iOS Safari momentum-scroll bug:
+   - Reduzir altura (200px → 120px) — menos área que pode "flutuar"
+   - Reduzir camadas mais pesadas (blur 16px e 32px causavam jank)
+   - transform:translateZ(0) força layer dedicada (composição mais estável) */
 @media (max-width: 900px) {
   #pgBlur {
+    height: 120px !important;
+    transform: translateZ(0) !important;
+    -webkit-transform: translateZ(0) !important;
+    will-change: transform !important;
+  }
+  /* Desliga as 2 ultimas camadas (blur 16px + blur 32px) — mais pesadas em mobile */
+  #pgBlur > div:nth-child(7),
+  #pgBlur > div:nth-child(8) {
     display: none !important;
   }
 }
